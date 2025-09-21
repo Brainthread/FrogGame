@@ -8,6 +8,7 @@ var movement_vector:Vector3
 @export var g:float = -9.82
 var jump_timer = 0;
 @export var jump_state:PlayerJumpState
+@export var airborne_state:PlayerAirborneState
 
 func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	state_machine = state_machine_node
@@ -37,6 +38,9 @@ func _state_update(_delta: float):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
 		state_machine._change_state(jump_state)
+		
+	if not state_machine._is_grounded():
+		state_machine._change_state(airborne_state)
 	
 	var input_vector = Vector3(ud, 0, lr).normalized()
 	var horizontal_velocity = root.velocity
@@ -47,6 +51,7 @@ func _state_update(_delta: float):
 
 	root.velocity = new_velocity
 	root.move_and_slide()
+
 	
 
 func _state_physics_update(_delta: float):
