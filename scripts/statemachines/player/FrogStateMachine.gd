@@ -2,6 +2,10 @@ extends FiniteStateMachine
 class_name FrogStateMachine
 
 var jump_power = 0
+@export var ground_collider:Area3D
+@export var movement_speed:float = 10
+@export var g_on_rise:float = -9.82
+@export var g_on_fall:float = -19.64
 
 func _ready():
 	states.resize(get_child_count())
@@ -33,3 +37,9 @@ func _process(delta):
 	
 func _physics_process(delta):
 	current_state._state_physics_update(delta)
+	
+	
+func _is_grounded():
+	var overlapping_bodies = ground_collider.get_overlapping_bodies()
+	return overlapping_bodies.size() > 0
+ 
