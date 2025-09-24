@@ -16,19 +16,8 @@ func _exit_state():
 	is_active = false
 	pass
 
-func _state_update(_delta: float):
-	var lr = 0
-	var ud = 0
-	if Input.is_action_pressed("left"):
-		lr += 1
-	if Input.is_action_pressed("right"):
-		lr -= 1
-	if Input.is_action_pressed("up"):
-		ud -= 1
-	if Input.is_action_pressed("down"):
-		ud += 1
-	
-	var input_vector = Vector3(ud, 0, lr).normalized()
+func _state_update(_delta: float):	
+	var input_vector = Vector3(InputReader.movement_vector.y, 0, InputReader.movement_vector.x).normalized()
 	var horizontal_velocity = root.velocity
 	
 	horizontal_velocity.y = 0

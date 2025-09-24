@@ -25,16 +25,6 @@ func _exit_state():
 	pass
 
 func _state_update(_delta: float):
-	var lr = 0
-	var ud = 0
-	if Input.is_action_pressed("left"):
-		lr += 1
-	if Input.is_action_pressed("right"):
-		lr -= 1
-	if Input.is_action_pressed("up"):
-		ud -= 1
-	if Input.is_action_pressed("down"):
-		ud += 1
 	if Input.is_action_pressed("jump"):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
@@ -44,7 +34,7 @@ func _state_update(_delta: float):
 	if not state_machine._is_grounded():
 		state_machine._change_state(airborne_state)
 	
-	var input_vector = Vector3(ud, 0, lr).normalized()
+	var input_vector = Vector3(InputReader.movement_vector.y, 0, InputReader.movement_vector.x).normalized()
 	var horizontal_velocity = root.velocity
 	horizontal_velocity.y = 0
 	horizontal_velocity = lerp(horizontal_velocity, input_vector * movement_speed, _delta * acceleration)
