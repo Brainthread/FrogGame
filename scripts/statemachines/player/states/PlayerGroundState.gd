@@ -9,6 +9,7 @@ var movement_vector:Vector3
 var jump_timer = 0;
 @export var jump_state:PlayerJumpState
 @export var airborne_state:PlayerAirborneState
+@export var ground_attack_state:PlayerGroundAttackState
 
 func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	state_machine = state_machine_node
@@ -38,7 +39,8 @@ func _state_update(_delta: float):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
 		state_machine._change_state(jump_state)
-		
+	if Input.is_action_just_pressed("attack"):
+		state_machine._change_state(ground_attack_state)
 	if not state_machine._is_grounded():
 		state_machine._change_state(airborne_state)
 	

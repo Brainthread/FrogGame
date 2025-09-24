@@ -7,6 +7,10 @@ var jump_power = 0
 @export var g_on_rise:float = -9.82
 @export var g_on_fall:float = -19.64
 
+var g_attack_counter = 0;
+var g_attack_timer = 0;
+@export var attack_combo_reset_time:float = 0.5;
+
 func _ready():
 	states.resize(get_child_count())
 	var actual_size = 0
