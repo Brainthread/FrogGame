@@ -8,14 +8,26 @@ func _process(_delta:float) -> void:
 	movement_vector = Input.get_vector("right", "left", "up", "down")
 	
 
-func _get_attack_direction():
+func _get_attack_direction(object):
 	if joystick:
-		pass
+		return null
 	else:
-		_get_relative_screen_position(null, null)
+		return _get_mouse_object_offset(object)
 
-func _get_relative_screen_position(camera, object_position) -> Vector3:
-	return Vector3(NAN, NAN, NAN)
+func _get_object_screen_position(object) -> Vector2:
+	var vp = get_viewport()
+	var cam = vp.get_camera_3d()
+	if cam and object:
+		var screen_pos = cam.unproject_position(object.global_transform.origin)
+		return screen_pos
+	return Vector2(NAN, NAN)
+
+func _get_mouse_object_offset(object) -> Vector2:
+	var screen_pos = _get_object_screen_position(object)
+	var mouse_position = get_viewport().get_mouse_position();
+	var diff = screen_pos - mouse_position;
+	print(diff);
+	return diff.normalized()
 	
 	
 

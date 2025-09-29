@@ -17,7 +17,9 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	root = root_node
 
 func _enter_state():
-	attack_direction = Vector3(1, 0, 1)
+	var attack_direction_2D = InputReader._get_attack_direction(root)
+	attack_direction.x = attack_direction_2D.y*-1
+	attack_direction.z = attack_direction_2D.x
 	attack_timer = 0
 	root.velocity = Vector3.ZERO
 	root.move_and_slide()
