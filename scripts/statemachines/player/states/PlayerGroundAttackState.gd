@@ -7,6 +7,7 @@ class_name PlayerGroundAttackState
 var attack_timer = 0
 @export var slice_movement_curve:Curve
 var attack_direction:Vector3
+@export var slash_hitbox:Node3D
 
 @export var jump_state:PlayerJumpState
 @export var airborne_state:PlayerAirborneState
@@ -18,7 +19,7 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 
 func _enter_state():
 	var attack_direction_2D = InputReader._get_attack_direction(root)
-	attack_direction.x = attack_direction_2D.y*-1
+	attack_direction.x = attack_direction_2D.y *-1
 	attack_direction.z = attack_direction_2D.x
 	attack_timer = 0
 	root.velocity = Vector3.ZERO
