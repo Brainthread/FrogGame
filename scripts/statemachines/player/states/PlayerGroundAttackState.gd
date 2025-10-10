@@ -32,7 +32,9 @@ func _state_update(_delta: float):
 	var vel = Vector3.ZERO;
 	vel = slice_movement_curve.sample(attack_timer/attack_time) * attack_direction * slice_movement_force
 	root.velocity = vel;
-	attack_timer += _delta
+	attack_timer += _delta;
+	
+	set_hitbox_rotation();
 	
 	if attack_timer >= attack_time:
 		attack_timer = 0
@@ -41,6 +43,13 @@ func _state_update(_delta: float):
 		else:
 			state_machine._change_state(airborne_state)
 	root.move_and_slide()
+	
+
+func set_hitbox_rotation():
+	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x);
+	var angle = -atan2(dir.x, dir.y);
+	slash_hitbox.rotation = Vector3(slash_hitbox.rotation.x, angle, slash_hitbox.rotation.z);
+	pass
 	
 
 func _state_physics_update(_delta: float):
