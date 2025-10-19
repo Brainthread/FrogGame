@@ -88,12 +88,13 @@ jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_attack_state = NodePath("../GroundAttack")
 
-[node name="GroundAttack" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("slash_hitbox", "jump_state", "airborne_state", "ground_state")]
+[node name="GroundAttack" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("slash_hitbox", "slash_fx", "jump_state", "airborne_state", "ground_state")]
 script = ExtResource("4_yk7ts")
-slice_movement_force = 7.0
+slice_movement_force = 9.0
 attack_time = 0.3
 slice_movement_curve = SubResource("Curve_at5dv")
 slash_hitbox = NodePath("../../Hitboxes/hitbox_slash")
+slash_fx = NodePath("../../Slash-fx")
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
@@ -114,7 +115,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
 shape = SubResource("SphereShape3D_ppyta")
 
 [node name="Hitboxes" type="Node3D" parent="Character"]
-transform = Transform3D(0.9781476, 0.2079117, 0, -0.2079117, 0.9781476, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="hitbox_slash" type="Area3D" parent="Character/Hitboxes"]
 script = ExtResource("7_uacia")
@@ -123,12 +123,17 @@ script = ExtResource("7_uacia")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
 shape = SubResource("BoxShape3D_uacia")
 
-[node name="Sprite3D" type="Sprite3D" parent="Character/Hitboxes/hitbox_slash"]
-transform = Transform3D(-2.1855695e-07, -5, -2.1855695e-07, 0, -2.1855695e-07, 5, -5, 2.1855695e-07, 9.553427e-15, 0.5614467, -0.122033596, 0)
+[node name="Hurtbox" type="Node3D" parent="Character"]
+
+[node name="Slash-fx" type="Node3D" parent="Character"]
+
+[node name="Node3D" type="Node3D" parent="Character/Slash-fx"]
+transform = Transform3D(0.97814757, 0.20791169, 0, -0.20791169, 0.97814757, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Character/Slash-fx/Node3D"]
+transform = Transform3D(-2.1378098e-07, -4.8907385, -1.0395588, -4.544055e-08, -1.0395588, 4.8907385, -5, 2.1855695e-07, 9.553427e-15, 0.57455003, -0.002635479, 0)
 texture_filter = 0
 texture = ExtResource("7_jcd4p")
-
-[node name="Hurtbox" type="Node3D" parent="Character"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.80972e-08, -3.34849e-08, 12.3352, 9.19101, 0.196168)

@@ -8,6 +8,7 @@ var attack_timer = 0
 @export var slice_movement_curve:Curve
 var attack_direction:Vector3
 @export var slash_hitbox:Node3D
+@export var slash_fx:Node3D
 
 @export var jump_state:PlayerJumpState
 @export var airborne_state:PlayerAirborneState
@@ -35,6 +36,7 @@ func _state_update(_delta: float):
 	attack_timer += _delta;
 	
 	set_hitbox_rotation();
+	set_slash_rotation();
 	
 	if attack_timer >= attack_time:
 		attack_timer = 0
@@ -51,6 +53,11 @@ func set_hitbox_rotation():
 	slash_hitbox.rotation = Vector3(slash_hitbox.rotation.x, angle, slash_hitbox.rotation.z);
 	pass
 	
+func set_slash_rotation():
+	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x);
+	var angle = -atan2(dir.x, dir.y);
+	slash_fx.rotation = Vector3(slash_fx.rotation.x, angle, slash_fx.rotation.z);
+	pass
 
 func _state_physics_update(_delta: float):
 	pass
