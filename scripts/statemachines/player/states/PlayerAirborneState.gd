@@ -32,7 +32,8 @@ func _state_update(_delta: float):
 		new_velocity.y += state_machine.g_on_fall * _delta
 		if(state_machine._is_grounded()):
 			state_machine._change_state(grounded_state)
-	
+	#TODO: set variables here
+	new_velocity.y = clamp(new_velocity.y, -20, 1000)  
 	root.velocity = new_velocity
 	root.move_and_slide()
 

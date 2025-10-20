@@ -56,6 +56,12 @@ attack={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="Static"
+3d_physics/layer_2="Hurtbox_Global"
+3d_physics/layer_3="Hurtbox_Player"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

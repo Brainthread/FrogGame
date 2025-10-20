@@ -10,6 +10,7 @@ var jump_timer = 0;
 @export var jump_state:PlayerJumpState
 @export var airborne_state:PlayerAirborneState
 @export var ground_attack_state:PlayerGroundAttackState
+@export var sprite:Sprite3D
 
 func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	state_machine = state_machine_node

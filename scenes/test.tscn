@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=19 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -51,11 +51,14 @@ volumetric_fog_emission_energy = 0.0
 volumetric_fog_gi_inject = 0.92
 volumetric_fog_length = 8.0
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_yk7ts"]
+size = Vector3(2.8807373, 6.1710205, 12.927856)
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
-collision_layer = 2
+collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
@@ -67,7 +70,7 @@ visible = false
 mesh = SubResource("BoxMesh_6uqi0")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character"]
-transform = Transform3D(-2.1855695e-07, -1.0395596, 4.8907433, 0, 4.8907433, 1.0395596, -5, 4.5440594e-08, -2.1378118e-07, -0.0842151, 0.0469384, -8.31124e-09)
+transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.0469384, -8.31124e-09)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
@@ -76,8 +79,8 @@ texture = ExtResource("1_at5dv")
 [node name="StateMachine" type="Node3D" parent="Character" node_paths=PackedStringArray("ground_collider", "current_state", "root")]
 script = ExtResource("2_jcd4p")
 ground_collider = NodePath("../GroundPolling")
-g_on_rise = -29.46
-g_on_fall = -48.0
+g_on_rise = -36.0
+g_on_fall = -58.0
 current_state = NodePath("Grounded")
 root = NodePath("..")
 
@@ -110,6 +113,7 @@ grounded_state = NodePath("../Grounded")
 
 [node name="GroundPolling" type="Area3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
+collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/GroundPolling"]
 shape = SubResource("SphereShape3D_ppyta")
@@ -117,6 +121,8 @@ shape = SubResource("SphereShape3D_ppyta")
 [node name="Hitboxes" type="Node3D" parent="Character"]
 
 [node name="hitbox_slash" type="Area3D" parent="Character/Hitboxes"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource("7_uacia")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Hitboxes/hitbox_slash"]
@@ -170,3 +176,9 @@ shape = SubResource("CylinderShape3D_g14j6")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g14j6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="Bawks" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4144325, 2.5855103, 0.8779907)
+shape = SubResource("BoxShape3D_yk7ts")
