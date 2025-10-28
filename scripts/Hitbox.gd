@@ -10,12 +10,10 @@ func _ready() -> void:
 	self.area_entered.connect(_on_area_entered)
 
 func start_detecting_hits() -> void:
-	print("Hitbox: detecting")
 	is_active = true
 	hits.clear()
 
 func stop_detecting_hits() -> void:
-	print("Hitbox: stopped detecting")
 	is_active = false
 
 func _process(_delta: float) -> void:

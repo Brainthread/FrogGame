@@ -46,11 +46,12 @@ func _state_update(_delta: float):
 
 func hit_object(object):
 	var hurtbox = object
-	apply_damage(hurtbox)
+	if hurtbox.verify_hit():
+		apply_damage(hurtbox)
 
 func apply_damage(hurtbox):
 	print("hit: " + hurtbox.name)
-	#hurtbox.apply_damage()
+	hurtbox.apply_damage(10);
 
 func set_hitbox_rotation():
 	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x)
