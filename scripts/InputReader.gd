@@ -26,7 +26,6 @@ func _get_mouse_object_offset(object) -> Vector2:
 	var screen_pos = _get_object_screen_position(object)
 	var mouse_position = get_viewport().get_mouse_position();
 	var diff = screen_pos - mouse_position;
-	print(diff);
 	return diff.normalized()
 	
 	

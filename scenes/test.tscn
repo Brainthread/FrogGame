@@ -9,8 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bg1owrrruuh0w" path="res://scenes/lily_pad.tscn" id="7_44saj"]
 [ext_resource type="Texture2D" uid="uid://ditgtgoaurqhl" path="res://sprite/Slash.png" id="7_jcd4p"]
 [ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="7_uacia"]
+[ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
-[ext_resource type="Script" uid="uid://1u6oynf7h2bu" path="res://scenes/HealthManager.gd" id="11_ajshl"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -31,6 +31,8 @@ radius = 0.264354
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
 size = Vector3(0.9463806, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajshl"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_g14j6"]
 height = 0.564941
@@ -53,15 +55,11 @@ volumetric_fog_emission_energy = 0.0
 volumetric_fog_gi_inject = 0.92
 volumetric_fog_length = 8.0
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_yk7ts"]
-size = Vector3(2.8807373, 6.1710205, 12.927856)
-
 [node name="Node3D" type="Node3D"]
 
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
 collision_layer = 4
-collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
@@ -143,6 +141,40 @@ transform = Transform3D(-2.1378098e-07, -4.8907385, -1.0395588, -4.544055e-08, -
 texture_filter = 0
 texture = ExtResource("7_jcd4p")
 
+[node name="Mosquitoknight" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mosquitoknight"]
+visible = false
+mesh = SubResource("BoxMesh_6uqi0")
+
+[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight"]
+transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.0469384, -8.31124e-09)
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+texture = ExtResource("9_ghpyy")
+
+[node name="GroundPolling" type="Area3D" parent="Mosquitoknight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/GroundPolling"]
+shape = SubResource("SphereShape3D_ppyta")
+
+[node name="Hurtbox" type="Area3D" parent="Mosquitoknight"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("10_yk7ts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Hurtbox"]
+shape = SubResource("BoxShape3D_ajshl")
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.80972e-08, -3.34849e-08, 12.3352, 9.19101, 0.196168)
 projection = 1
@@ -178,15 +210,3 @@ shape = SubResource("CylinderShape3D_g14j6")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g14j6")
-
-[node name="Node3D" type="Node3D" parent="."]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Node3D"]
-script = ExtResource("10_yk7ts")
-
-[node name="Bawks" type="CollisionShape3D" parent="Node3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4144325, 2.5855103, 0.8779907)
-shape = SubResource("BoxShape3D_yk7ts")
-
-[node name="Node3D" type="Node3D" parent="Node3D"]
-script = ExtResource("11_ajshl")
