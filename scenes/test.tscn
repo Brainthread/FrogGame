@@ -177,7 +177,7 @@ script = ExtResource("10_yk7ts")
 shape = SubResource("BoxShape3D_ajshl")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.37114e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.80972e-08, -3.34849e-08, 12.3352, 9.19101, 0.196168)
+transform = Transform3D(-4.371139e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.8097157e-08, -3.3484845e-08, 12.3352, 9.19101, 0.196168)
 projection = 1
 size = 11.849
 far = 30.64
