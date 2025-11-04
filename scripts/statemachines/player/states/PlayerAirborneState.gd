@@ -36,6 +36,8 @@ func _state_update(_delta: float):
 	new_velocity.y = clamp(new_velocity.y, -20, 1000)  
 	root.velocity = new_velocity
 	root.move_and_slide()
+	
+	
 
 func _state_physics_update(_delta: float):
 	pass

@@ -25,7 +25,7 @@ func _exit_state():
 	is_active = false
 	pass
 
-func _state_update(_delta: float):
+func _state_update(_delta: float): 
 	if Input.is_action_pressed("jump"):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
@@ -45,7 +45,13 @@ func _state_update(_delta: float):
 	root.velocity = new_velocity
 	root.move_and_slide()
 
-	
+	var mouse_vector = InputReader._get_mouse_object_offset(root).normalized()
+	var renderer = state_machine.renderer
+	if mouse_vector.x < 0:
+		renderer.flip_h = false
+	else:
+		renderer.flip_h = true
+
 
 func _state_physics_update(_delta: float):
 	pass

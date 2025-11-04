@@ -18,6 +18,7 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	state_machine = state_machine_node
 	root = root_node
 	slash_hitbox.hit_entity.connect(hit_object)
+	slash_fx.visible = false;
 
 func _enter_state():
 	var attack_direction_2D = InputReader._get_attack_direction(root)
@@ -27,9 +28,11 @@ func _enter_state():
 	root.velocity = Vector3.ZERO
 	root.move_and_slide()
 	start_registering_hits()
+	slash_fx.visible = true;
 
 func _exit_state():
 	stop_registering_hits()
+	slash_fx.visible = false;
 
 func _state_update(_delta: float):
 	var vel = Vector3.ZERO

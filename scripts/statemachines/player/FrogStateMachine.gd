@@ -6,6 +6,7 @@ var jump_power = 0
 @export var movement_speed:float = 10
 @export var g_on_rise:float = -9.82
 @export var g_on_fall:float = -19.64
+@export var renderer:Node3D
 
 var g_attack_counter = 0;
 var g_attack_timer = 0;

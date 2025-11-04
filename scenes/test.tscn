@@ -76,11 +76,12 @@ alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("1_at5dv")
 
-[node name="StateMachine" type="Node3D" parent="Character" node_paths=PackedStringArray("ground_collider", "current_state", "root")]
+[node name="StateMachine" type="Node3D" parent="Character" node_paths=PackedStringArray("ground_collider", "renderer", "current_state", "root")]
 script = ExtResource("2_jcd4p")
 ground_collider = NodePath("../GroundPolling")
 g_on_rise = -36.0
 g_on_fall = -58.0
+renderer = NodePath("../Sprite3D")
 current_state = NodePath("Grounded")
 root = NodePath("..")
 
