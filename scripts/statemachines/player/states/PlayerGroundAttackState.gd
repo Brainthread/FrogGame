@@ -4,7 +4,10 @@ class_name PlayerGroundAttackState
 @export var attack_substates = null
 @export var slice_movement_force:float = 5
 @export var attack_time:float = 0.5
+@export var attack_windup_time:float = 0.2
 var attack_timer = 0
+var attack_windup_timer = 0
+var wind_up = false
 @export var slice_movement_curve:Curve
 var attack_direction:Vector3
 @export var slash_hitbox:Node3D
@@ -25,6 +28,10 @@ func _enter_state():
 	attack_direction.x = attack_direction_2D.y * -1
 	attack_direction.z = attack_direction_2D.x
 	attack_timer = 0
+	wind_up = false
+	attack_windup_timer = 0
+	
+func _start_attack():
 	root.velocity = Vector3.ZERO
 	root.move_and_slide()
 	start_registering_hits()
@@ -35,6 +42,16 @@ func _exit_state():
 	slash_fx.visible = false;
 
 func _state_update(_delta: float):
+	root.move_and_slide()
+	attack_windup_timer += _delta
+	if attack_windup_timer < attack_windup_time:
+		var velz = root.velocity;
+		velz *= 1-0.2*_delta;
+		root.velocity = velz;
+		return
+	if not wind_up:
+		wind_up = true
+		_start_attack()
 	var vel = Vector3.ZERO
 	vel = slice_movement_curve.sample(attack_timer/attack_time) * attack_direction * slice_movement_force
 	root.velocity = vel
@@ -45,7 +62,6 @@ func _state_update(_delta: float):
 			state_machine._change_state(ground_state)
 		else:
 			state_machine._change_state(airborne_state)
-	root.move_and_slide()
 
 func hit_object(object):
 	var hurtbox = object

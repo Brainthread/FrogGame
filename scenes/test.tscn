@@ -1,20 +1,22 @@
-[gd_scene load_steps=21 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=24 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
 [ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_uacia"]
 [ext_resource type="Script" uid="uid://b27hyhwdgjwjk" path="res://scripts/statemachines/player/states/PlayerGroundAttackState.gd" id="4_yk7ts"]
 [ext_resource type="Script" uid="uid://bbfpwggwbsg57" path="res://scripts/statemachines/player/states/PlayerJumpState.gd" id="5_ajshl"]
+[ext_resource type="Script" uid="uid://bujy08xidy0g7" path="res://scenes/death_manager.gd" id="6_44saj"]
 [ext_resource type="Script" uid="uid://b2ifomelrlmfr" path="res://scripts/statemachines/player/states/PlayerAirborneState.gd" id="6_ghpyy"]
+[ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scenes/health_manager.gd" id="7_7mbro"]
 [ext_resource type="PackedScene" uid="uid://bg1owrrruuh0w" path="res://scenes/lily_pad.tscn" id="7_44saj"]
 [ext_resource type="Texture2D" uid="uid://ditgtgoaurqhl" path="res://sprite/Slash.png" id="7_jcd4p"]
 [ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="7_uacia"]
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
-radius = 0.40527344
-height = 1.3397183
+[sub_resource type="Curve" id="Curve_at5dv"]
+_data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.054347828, 1), 0.0, 0.0, 0, 0, Vector2(0.58399993, 0.18336165), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf4mk"]
 albedo_color = Color(0, 0.509671, 0.324473, 1)
@@ -22,21 +24,17 @@ albedo_color = Color(0, 0.509671, 0.324473, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_6uqi0"]
 material = SubResource("StandardMaterial3D_mf4mk")
 
-[sub_resource type="Curve" id="Curve_at5dv"]
-_data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.054347828, 1), 0.0, 0.0, 0, 0, Vector2(0.58399993, 0.18336165), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 4
+[sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
+size = Vector3(0.9463806, 1, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
+radius = 0.40527344
+height = 1.3397183
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
 radius = 0.264354
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
-size = Vector3(0.9463806, 1, 1)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajshl"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_g14j6"]
-height = 0.564941
-radius = 10.1396
 
 [sub_resource type="Environment" id="Environment_g14j6"]
 ambient_light_color = Color(0.30311, 0.608761, 0.511145, 1)
@@ -55,62 +53,108 @@ volumetric_fog_emission_energy = 0.0
 volumetric_fog_gi_inject = 0.92
 volumetric_fog_length = 8.0
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_ajshl"]
+vertices = PackedVector3Array(1.6810184, -0.78305817, 7.203495, 3.6810184, -0.78305817, 6.703495, 5.4310184, -0.78305817, 5.453495, 7.1810184, -0.78305817, 2.203495, 7.1810184, -0.78305817, -2.296505, 6.4310184, -0.78305817, -4.046505, 4.9310184, -0.78305817, -5.796505, -7.3189816, -0.78305817, 1.953495, -6.8189816, -0.78305817, 3.453495, -5.0689816, -0.78305817, 5.703495, -2.8189816, -0.78305817, 6.953495, -1.8189816, -0.78305817, -7.296505, -3.8189816, -0.78305817, -6.546505, -6.0689816, -0.78305817, -4.546505, -7.3189816, -0.78305817, -1.796505, 1.9310184, -0.78305817, -7.296505)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 3), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 0), PackedInt32Array(13, 12, 11), PackedInt32Array(7, 14, 13), PackedInt32Array(13, 11, 7), PackedInt32Array(7, 11, 6), PackedInt32Array(7, 6, 3), PackedInt32Array(7, 3, 0), PackedInt32Array(11, 15, 6)]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_g14j6"]
+height = 0.564941
+radius = 10.1396
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
 collision_layer = 4
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
-shape = SubResource("CapsuleShape3D_ppyta")
+[node name="Systems" type="Node3D" parent="Character"]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Character"]
-visible = false
-mesh = SubResource("BoxMesh_6uqi0")
-
-[node name="Sprite3D" type="Sprite3D" parent="Character"]
-transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.0469384, -8.31124e-09)
-shaded = true
-alpha_cut = 2
-texture_filter = 0
-texture = ExtResource("1_at5dv")
-
-[node name="StateMachine" type="Node3D" parent="Character" node_paths=PackedStringArray("ground_collider", "renderer", "current_state", "root")]
+[node name="StateMachine" type="Node3D" parent="Character/Systems" node_paths=PackedStringArray("ground_collider", "renderer", "current_state", "root")]
 script = ExtResource("2_jcd4p")
-ground_collider = NodePath("../GroundPolling")
+ground_collider = NodePath("../../GroundPolling")
 g_on_rise = -36.0
 g_on_fall = -58.0
-renderer = NodePath("../Sprite3D")
+renderer = NodePath("../../Visual/Sprite3D")
 current_state = NodePath("Grounded")
-root = NodePath("..")
+root = NodePath("../..")
 
-[node name="Grounded" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_attack_state")]
+[node name="Grounded" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_attack_state")]
 script = ExtResource("3_uacia")
 g = -19.64
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_attack_state = NodePath("../GroundAttack")
 
-[node name="GroundAttack" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("slash_hitbox", "slash_fx", "jump_state", "airborne_state", "ground_state")]
+[node name="GroundAttack" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("slash_hitbox", "slash_fx", "jump_state", "airborne_state", "ground_state")]
 script = ExtResource("4_yk7ts")
 slice_movement_force = 9.0
-attack_time = 0.3
+attack_time = 0.2
+attack_windup_time = 0.1
 slice_movement_curve = SubResource("Curve_at5dv")
-slash_hitbox = NodePath("../../Hitboxes/hitbox_slash")
-slash_fx = NodePath("../../Slash-fx")
+slash_hitbox = NodePath("../../../HitAndHurt/Hitboxes/hitbox_slash")
+slash_fx = NodePath("../../../Visual/Slash-fx")
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
 
-[node name="Jump" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
+[node name="Jump" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
 script = ExtResource("5_ajshl")
 airborne_state = NodePath("../Airborne")
 grounded_state = NodePath("../Grounded")
 
-[node name="Airborne" type="Node3D" parent="Character/StateMachine" node_paths=PackedStringArray("grounded_state")]
+[node name="Airborne" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("grounded_state")]
 script = ExtResource("6_ghpyy")
 grounded_state = NodePath("../Grounded")
+
+[node name="DeathManager" type="Node3D" parent="Character/Systems"]
+script = ExtResource("6_44saj")
+
+[node name="HealthManager" type="Node3D" parent="Character/Systems"]
+script = ExtResource("7_7mbro")
+
+[node name="Visual" type="Node3D" parent="Character"]
+
+[node name="Slash-fx" type="Node3D" parent="Character/Visual"]
+visible = false
+
+[node name="Node3D" type="Node3D" parent="Character/Visual/Slash-fx"]
+transform = Transform3D(0.97814757, 0.20791169, 0, -0.20791169, 0.97814757, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Character/Visual/Slash-fx/Node3D"]
+transform = Transform3D(-2.1378098e-07, -4.8907385, -1.0395588, -4.544055e-08, -1.0395588, 4.8907385, -5, 2.1855695e-07, 9.553427e-15, 0.57455003, -0.002635479, 0)
+texture_filter = 0
+texture = ExtResource("7_jcd4p")
+
+[node name="Sprite3D" type="Sprite3D" parent="Character/Visual"]
+transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.04693842, -8.31124e-09)
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+texture = ExtResource("1_at5dv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Character/Visual"]
+visible = false
+mesh = SubResource("BoxMesh_6uqi0")
+skeleton = NodePath("../..")
+
+[node name="HitAndHurt" type="Node3D" parent="Character"]
+
+[node name="Hitboxes" type="Node3D" parent="Character/HitAndHurt"]
+
+[node name="hitbox_slash" type="Area3D" parent="Character/HitAndHurt/Hitboxes"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_uacia")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/HitAndHurt/Hitboxes/hitbox_slash"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
+shape = SubResource("BoxShape3D_uacia")
+
+[node name="Hurtbox" type="Node3D" parent="Character/HitAndHurt"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
 
 [node name="GroundPolling" type="Area3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
@@ -119,33 +163,12 @@ collision_layer = 0
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/GroundPolling"]
 shape = SubResource("SphereShape3D_ppyta")
 
-[node name="Hitboxes" type="Node3D" parent="Character"]
-
-[node name="hitbox_slash" type="Area3D" parent="Character/Hitboxes"]
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_uacia")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Hitboxes/hitbox_slash"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
-shape = SubResource("BoxShape3D_uacia")
-
-[node name="Hurtbox" type="Node3D" parent="Character"]
-
-[node name="Slash-fx" type="Node3D" parent="Character"]
-visible = false
-
-[node name="Node3D" type="Node3D" parent="Character/Slash-fx"]
-transform = Transform3D(0.97814757, 0.20791169, 0, -0.20791169, 0.97814757, 0, 0, 0, 1, 0, 0, 0)
-
-[node name="Sprite3D" type="Sprite3D" parent="Character/Slash-fx/Node3D"]
-transform = Transform3D(-2.1378098e-07, -4.8907385, -1.0395588, -4.544055e-08, -1.0395588, 4.8907385, -5, 2.1855695e-07, 9.553427e-15, 0.57455003, -0.002635479, 0)
-texture_filter = 0
-texture = ExtResource("7_jcd4p")
-
 [node name="Mosquitoknight" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
 collision_layer = 0
+
+[node name="DeathManager" type="Node3D" parent="Mosquitoknight"]
+script = ExtResource("6_44saj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
@@ -177,6 +200,8 @@ script = ExtResource("10_yk7ts")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Hurtbox"]
 shape = SubResource("BoxShape3D_ajshl")
 
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Mosquitoknight"]
+
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.371139e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.8097157e-08, -3.3484845e-08, 12.3352, 9.19101, 0.196168)
 projection = 1
@@ -198,17 +223,20 @@ directional_shadow_blend_splits = true
 directional_shadow_max_distance = 267.5
 directional_shadow_pancake_size = 0.0
 
-[node name="Lily_pad" type="Node3D" parent="."]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0105181, -4.28093, 0.0119583)
-
-[node name="lily_pad2" parent="Lily_pad" instance=ExtResource("7_44saj")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Lily_pad"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Lily_pad/StaticBody3D"]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
-shape = SubResource("CylinderShape3D_g14j6")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_g14j6")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_ajshl")
+
+[node name="Lily_pad" type="Node3D" parent="NavigationRegion3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0105181, -4.28093, 0.0119583)
+
+[node name="lily_pad2" parent="NavigationRegion3D/Lily_pad" instance=ExtResource("7_44saj")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Lily_pad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Lily_pad/StaticBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
+shape = SubResource("CylinderShape3D_g14j6")
