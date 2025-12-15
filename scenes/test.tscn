@@ -14,6 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
+radius = 0.40527344
+height = 1.3397183
+
 [sub_resource type="Curve" id="Curve_at5dv"]
 _data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.054347828, 1), 0.0, 0.0, 0, 0, Vector2(0.58399993, 0.18336165), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
@@ -26,10 +30,6 @@ material = SubResource("StandardMaterial3D_mf4mk")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
 size = Vector3(0.9463806, 1, 1)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
-radius = 0.40527344
-height = 1.3397183
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
 radius = 0.264354
@@ -66,6 +66,10 @@ radius = 10.1396
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
 collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
 
 [node name="Systems" type="Node3D" parent="Character"]
 
@@ -151,10 +155,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
 shape = SubResource("BoxShape3D_uacia")
 
 [node name="Hurtbox" type="Node3D" parent="Character/HitAndHurt"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
-shape = SubResource("CapsuleShape3D_ppyta")
 
 [node name="GroundPolling" type="Area3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
