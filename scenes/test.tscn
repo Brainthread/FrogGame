@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=25 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="7_uacia"]
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
+[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scenes/damage_manager.gd" id="12_7mbro"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -22,14 +23,14 @@ height = 1.3397183
 _data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.054347828, 1), 0.0, 0.0, 0, 0, Vector2(0.58399993, 0.18336165), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
+size = Vector3(0.9463806, 1, 1)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf4mk"]
 albedo_color = Color(0, 0.509671, 0.324473, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_6uqi0"]
 material = SubResource("StandardMaterial3D_mf4mk")
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
-size = Vector3(0.9463806, 1, 1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
 radius = 0.264354
@@ -95,7 +96,7 @@ slice_movement_force = 9.0
 attack_time = 0.2
 attack_windup_time = 0.1
 slice_movement_curve = SubResource("Curve_at5dv")
-slash_hitbox = NodePath("../../../HitAndHurt/Hitboxes/hitbox_slash")
+slash_hitbox = NodePath("../../HitAndHurt/Hitboxes/hitbox_slash")
 slash_fx = NodePath("../../../Visual/Slash-fx")
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
@@ -115,6 +116,23 @@ script = ExtResource("6_44saj")
 
 [node name="HealthManager" type="Node3D" parent="Character/Systems"]
 script = ExtResource("7_7mbro")
+health = 100.0
+max_health = 100.0
+
+[node name="HitAndHurt" type="Node3D" parent="Character/Systems"]
+
+[node name="Hitboxes" type="Node3D" parent="Character/Systems/HitAndHurt"]
+
+[node name="hitbox_slash" type="Area3D" parent="Character/Systems/HitAndHurt/Hitboxes"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("7_uacia")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/HitAndHurt/Hitboxes/hitbox_slash"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
+shape = SubResource("BoxShape3D_uacia")
+
+[node name="Hurtbox" type="Node3D" parent="Character/Systems/HitAndHurt"]
 
 [node name="Visual" type="Node3D" parent="Character"]
 
@@ -141,21 +159,6 @@ visible = false
 mesh = SubResource("BoxMesh_6uqi0")
 skeleton = NodePath("../..")
 
-[node name="HitAndHurt" type="Node3D" parent="Character"]
-
-[node name="Hitboxes" type="Node3D" parent="Character/HitAndHurt"]
-
-[node name="hitbox_slash" type="Area3D" parent="Character/HitAndHurt/Hitboxes"]
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("7_uacia")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/HitAndHurt/Hitboxes/hitbox_slash"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
-shape = SubResource("BoxShape3D_uacia")
-
-[node name="Hurtbox" type="Node3D" parent="Character/HitAndHurt"]
-
 [node name="GroundPolling" type="Area3D" parent="Character"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
 collision_layer = 0
@@ -167,23 +170,49 @@ shape = SubResource("SphereShape3D_ppyta")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
 collision_layer = 0
 
-[node name="DeathManager" type="Node3D" parent="Mosquitoknight"]
-script = ExtResource("6_44saj")
+[node name="Visual" type="Node3D" parent="Mosquitoknight"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
-shape = SubResource("CapsuleShape3D_ppyta")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mosquitoknight"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mosquitoknight/Visual"]
 visible = false
 mesh = SubResource("BoxMesh_6uqi0")
+skeleton = NodePath("../..")
 
-[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight"]
-transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.0469384, -8.31124e-09)
+[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual"]
+transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.084215164, 0.04693839, 0)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("9_ghpyy")
+
+[node name="Systems" type="Node3D" parent="Mosquitoknight"]
+
+[node name="DamageManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
+script = ExtResource("12_7mbro")
+health_manager = NodePath("../HealthManager")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+death_manager = NodePath("../DeathManager")
+
+[node name="DeathManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("6_44saj")
+
+[node name="HealthManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("7_7mbro")
+health = 30.0
+max_health = 30.0
+
+[node name="HitAndHurt" type="Node3D" parent="Mosquitoknight/Systems"]
+
+[node name="Hurtbox" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("10_yk7ts")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hurtbox"]
+shape = SubResource("BoxShape3D_ajshl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
 
 [node name="GroundPolling" type="Area3D" parent="Mosquitoknight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
@@ -191,14 +220,6 @@ collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/GroundPolling"]
 shape = SubResource("SphereShape3D_ppyta")
-
-[node name="Hurtbox" type="Area3D" parent="Mosquitoknight"]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("10_yk7ts")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Hurtbox"]
-shape = SubResource("BoxShape3D_ajshl")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Mosquitoknight"]
 
