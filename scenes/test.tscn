@@ -1,8 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=27 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
 [ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_uacia"]
+[ext_resource type="Script" uid="uid://w3oxfr1xotrg" path="res://scenes/tongue_attack_state.gd" id="4_7yos8"]
 [ext_resource type="Script" uid="uid://b27hyhwdgjwjk" path="res://scripts/statemachines/player/states/PlayerGroundAttackState.gd" id="4_yk7ts"]
 [ext_resource type="Script" uid="uid://bbfpwggwbsg57" path="res://scripts/statemachines/player/states/PlayerJumpState.gd" id="5_ajshl"]
 [ext_resource type="Script" uid="uid://bujy08xidy0g7" path="res://scenes/death_manager.gd" id="6_44saj"]
@@ -102,6 +103,9 @@ slash_fx = NodePath("../../../Visual/Slash-fx")
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
+
+[node name="TongueAttack" type="Node3D" parent="Character/Systems/StateMachine"]
+script = ExtResource("4_7yos8")
 
 [node name="Jump" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
 script = ExtResource("5_ajshl")
