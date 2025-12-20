@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=28 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scenes/damage_manager.gd" id="12_7mbro"]
 [ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scenes/simple_huntstate.gd" id="14_ff6ho"]
+[ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -216,6 +217,7 @@ script = ExtResource("10_yk7ts")
 shape = SubResource("BoxShape3D_ajshl")
 
 [node name="StateManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("15_5jxlq")
 
 [node name="SimpleHuntstate" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("player", "nav", "body")]
 script = ExtResource("14_ff6ho")

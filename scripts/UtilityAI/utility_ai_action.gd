@@ -1,0 +1,1 @@
+class_name UtilityAiAction extends Node
