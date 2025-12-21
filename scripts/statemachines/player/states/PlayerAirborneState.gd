@@ -10,10 +10,10 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	root = root_node
 
 func _enter_state():
-	is_active = true
+	super._enter_state()
 
 func _exit_state():
-	is_active = false
+	super._exit_state()
 	pass
 
 func _state_update(_delta: float):	

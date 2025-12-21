@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=29 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://ditgtgoaurqhl" path="res://sprite/Slash.png" id="7_jcd4p"]
 [ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="7_uacia"]
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
+[ext_resource type="Script" uid="uid://c4mpe0vm2olow" path="res://scenes/tongue_attack_handler.gd" id="10_xrtyr"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scenes/damage_manager.gd" id="12_7mbro"]
 [ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scenes/simple_huntstate.gd" id="14_ff6ho"]
@@ -105,7 +106,7 @@ jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
 
-[node name="TongueAttack" type="Node3D" parent="Character/Systems/StateMachine"]
+[node name="TongueAttackHeavy" type="Node3D" parent="Character/Systems/StateMachine"]
 script = ExtResource("4_7yos8")
 
 [node name="Jump" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
@@ -139,6 +140,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
 shape = SubResource("BoxShape3D_uacia")
 
 [node name="Hurtbox" type="Node3D" parent="Character/Systems/HitAndHurt"]
+
+[node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
+
+[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler"]
+script = ExtResource("10_xrtyr")
 
 [node name="Visual" type="Node3D" parent="Character"]
 

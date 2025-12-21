@@ -30,6 +30,7 @@ func _enter_state():
 	attack_timer = 0
 	wind_up = false
 	attack_windup_timer = 0
+	super._enter_state()
 	
 func _start_attack():
 	root.velocity = Vector3.ZERO
@@ -40,6 +41,7 @@ func _start_attack():
 func _exit_state():
 	stop_registering_hits()
 	slash_fx.visible = false;
+	super._exit_state()
 
 func _state_update(_delta: float):
 	root.move_and_slide()

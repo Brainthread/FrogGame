@@ -13,9 +13,11 @@ func _enter_state():
 	is_active = true
 	root.velocity.y = jump_power
 	root.move_and_slide()
+	super._enter_state()
 
 func _exit_state():
 	is_active = false
+	super._exit_state()
 	pass
 
 func _state_update(_delta: float):

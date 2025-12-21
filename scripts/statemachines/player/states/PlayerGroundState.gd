@@ -19,10 +19,12 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 func _enter_state():
 	jump_timer = 0
 	is_active = true
+	super._enter_state()
 	pass
 
 func _exit_state():
 	is_active = false
+	super._exit_state()
 	pass
 
 func _state_update(_delta: float): 
