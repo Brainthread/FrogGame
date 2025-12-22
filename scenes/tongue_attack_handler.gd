@@ -12,6 +12,7 @@ var tongue_target:Node3D = null
 enum TongueState {
 	WAITING,
 	EXTENDING,
+	RETRACTING,
 	FALLING,
 	ATTACHED
 }
@@ -19,12 +20,26 @@ enum TongueState {
 signal attached(target:Node3D, position:Vector3)
 
 func _process(delta: float) -> void:
+	if not usable:
+		_start_retracting()
 	match tongue_state:
 		TongueState.WAITING:
-			pass
+			if Input.is_action_just_pressed("tongue_attack"):
+				tongue_state = TongueState.EXTENDING
 		TongueState.EXTENDING:
-			pass
+			if Input.is_action_just_released("tongue_attack"):
+				tongue_state = TongueState.RETRACTING
+		TongueState.RETRACTING:
+			if tongue_hitbox.position.distance_to(self.position) < 0.01:
+				tongue_state = TongueState.WAITING
+			else:
+				pass
 		TongueState.FALLING:
-			pass
+			if Input.is_action_just_released("tongue_attack"):
+				tongue_state = TongueState.RETRACTING
 		TongueState.ATTACHED:
-			pass
+			if Input.is_action_just_released("tongue_attack"):
+				tongue_state = TongueState.RETRACTING
+
+func _start_retracting():
+	tongue_state = TongueState.RETRACTING
