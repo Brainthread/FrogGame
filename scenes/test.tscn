@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=31 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
 [ext_resource type="Script" uid="uid://c4mpe0vm2olow" path="res://scenes/tongue_attack_handler.gd" id="10_xrtyr"]
 [ext_resource type="Script" uid="uid://b3gfi7wkn7l3a" path="res://scripts/Hurtbox.gd" id="10_yk7ts"]
+[ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="11_daiq8"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scenes/damage_manager.gd" id="12_7mbro"]
 [ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scenes/simple_huntstate.gd" id="14_ff6ho"]
 [ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
@@ -29,6 +30,9 @@ point_count = 4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
 size = Vector3(0.9463806, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c6rvn"]
+size = Vector3(0.8670654, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf4mk"]
 albedo_color = Color(0, 0.509671, 0.324473, 1)
@@ -145,6 +149,18 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler"]
 script = ExtResource("10_xrtyr")
+
+[node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+transform = Transform3D(-8.742278e-09, -0.041582342, 0.19562952, 0, 0.19562952, 0.041582342, -0.2, 1.8176218e-09, -8.551239e-09, 0.12557411, 0.026691603, -5.489019e-09)
+texture = ExtResource("11_daiq8")
+
+[node name="Area3D" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066467285, 0, 0)
+shape = SubResource("BoxShape3D_c6rvn")
 
 [node name="Visual" type="Node3D" parent="Character"]
 
