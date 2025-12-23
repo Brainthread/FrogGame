@@ -147,16 +147,19 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
 
-[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler"]
+[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_tip_node")]
 script = ExtResource("10_xrtyr")
+tongue_tip_node = NodePath("TonguePoint")
 
 [node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
-transform = Transform3D(-8.742278e-09, -0.041582342, 0.19562952, 0, 0.19562952, 0.041582342, -0.2, 1.8176218e-09, -8.551239e-09, 0.12557411, 0.026691603, -5.489019e-09)
+transform = Transform3D(0.2, 0, 0, 0, 0.19562952, 0.041582342, 0, -0.041582342, 0.19562952, 0, 0, 0)
 texture = ExtResource("11_daiq8")
 
 [node name="Area3D" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066467285, 0, 0)
@@ -165,18 +168,17 @@ shape = SubResource("BoxShape3D_c6rvn")
 [node name="Visual" type="Node3D" parent="Character"]
 
 [node name="Slash-fx" type="Node3D" parent="Character/Visual"]
-visible = false
 
 [node name="Node3D" type="Node3D" parent="Character/Visual/Slash-fx"]
 transform = Transform3D(0.97814757, 0.20791169, 0, -0.20791169, 0.97814757, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Visual/Slash-fx/Node3D"]
-transform = Transform3D(-2.1378098e-07, -4.8907385, -1.0395588, -4.544055e-08, -1.0395588, 4.8907385, -5, 2.1855695e-07, 9.553427e-15, 0.57455003, -0.002635479, 0)
+transform = Transform3D(6.461188e-07, -4.8907385, -1.0395584, 9.088107e-08, -1.0395584, 4.8907385, -5, -6.508949e-07, -4.544054e-08, 0.57455003, -0.002635479, 0)
 texture_filter = 0
 texture = ExtResource("7_jcd4p")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Visual"]
-transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.0842151, 0.04693842, -8.31124e-09)
+transform = Transform3D(5, 0, 0, 0, 4.890738, 1.0395585, 0, -1.0395585, 4.890738, -0.0842151, 0.04693842, -8.31124e-09)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
@@ -206,7 +208,7 @@ mesh = SubResource("BoxMesh_6uqi0")
 skeleton = NodePath("../..")
 
 [node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual"]
-transform = Transform3D(-2.1855695e-07, -1.0395585, 4.890738, 0, 4.890738, 1.0395585, -5, 4.5440544e-08, -2.1378096e-07, -0.084215164, 0.04693839, 0)
+transform = Transform3D(5, 0, 0, 0, 4.890738, 1.0395585, 0, -1.0395585, 4.890738, -0.084215164, 0.04693839, 0)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
@@ -261,13 +263,14 @@ shape = SubResource("SphereShape3D_ppyta")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Mosquitoknight"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(-4.371139e-08, -0.642788, 0.766044, 0, 0.766044, 0.642788, -1, 2.8097157e-08, -3.3484845e-08, 12.3352, 9.19101, 0.196168)
+transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 9.191, 12.335)
 projection = 1
+current = true
 size = 11.849
 far = 30.64
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.847329, -0.000173235, 0.531068, -0.531068, 0.000285803, 0.847329, -0.000298568, -1, 0.00015017, 14, 7, 0)
+transform = Transform3D(1, 0, 0, 0, 0.5562957, 0.8309845, 0, -0.8309846, 0.55629563, 14, 7, 0)
 light_angular_distance = 16.05
 shadow_enabled = true
 shadow_bias = 2.145
@@ -288,7 +291,7 @@ environment = SubResource("Environment_g14j6")
 navigation_mesh = SubResource("NavigationMesh_ajshl")
 
 [node name="Lily_pad" type="Node3D" parent="NavigationRegion3D"]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.0105181, -4.28093, 0.0119583)
+transform = Transform3D(-6.556708e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.556708e-08, -0.0105181, -4.28093, 0.0119583)
 
 [node name="lily_pad2" parent="NavigationRegion3D/Lily_pad" instance=ExtResource("7_44saj")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
