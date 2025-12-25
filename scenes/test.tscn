@@ -147,8 +147,9 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
 
-[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_tip_node")]
+[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node")]
 script = ExtResource("10_xrtyr")
+tongue_hitbox = NodePath("TonguePoint/Hitbox")
 tongue_tip_node = NodePath("TonguePoint")
 
 [node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
@@ -157,11 +158,13 @@ tongue_tip_node = NodePath("TonguePoint")
 transform = Transform3D(0.2, 0, 0, 0, 0.19562952, 0.041582342, 0, -0.041582342, 0.19562952, 0, 0, 0)
 texture = ExtResource("11_daiq8")
 
-[node name="Area3D" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+[node name="Hitbox" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
 collision_layer = 0
 collision_mask = 0
+script = ExtResource("7_uacia")
+metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Hitbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066467285, 0, 0)
 shape = SubResource("BoxShape3D_c6rvn")
 

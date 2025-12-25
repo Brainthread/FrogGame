@@ -6,6 +6,7 @@ var tongue_attached_node:Node3D = null
 var tongue_attached_position:Vector3
 var tongue_target_position:Vector3
 @export var mouth_marker:Node3D
+@export var tongue_hitbox:Hitbox
 @export var max_length:float = 1
 @export var extension_speed:float = 10
 @export var retraction_speed:float = 7
@@ -23,6 +24,13 @@ enum TongueState {
 }
 
 signal attached(target:Node3D, position:Vector3)
+
+func _tongue_hit_object(body:Node3D) -> void:
+	print(body)
+	tongue_hitbox.is_active = true
+
+func _ready() -> void:
+	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
 func _process(delta: float) -> void:
 	if not usable:
@@ -45,6 +53,7 @@ func _process(delta: float) -> void:
 					target_point.y = self.position.y
 					tongue_target_position = target_point
 					tongue_state = TongueState.EXTENDING
+					tongue_hitbox.is_active = true
 					tongue_tip_node.reparent(get_tree().get_root())
 
 		TongueState.EXTENDING:
@@ -69,6 +78,7 @@ func _process(delta: float) -> void:
 func _test_for_retracting():
 	if Input.is_action_just_released("tongue_attack"):
 		tongue_state = TongueState.RETRACTING
+		tongue_hitbox.is_active = false
 
 func _start_retracting():
 	tongue_state = TongueState.RETRACTING

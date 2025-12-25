@@ -34,7 +34,7 @@ func detect_hit() -> void:
 			hits[area] = true
 			hit_entity.emit(area)
 
-func _on_body_entered(body: Node) -> void:
+func _on_body_entered(body: Node3D) -> void:
 	if is_active && body not in hits:
 		hits[body] = true
 		hit_entity.emit(body)
