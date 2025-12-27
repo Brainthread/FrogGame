@@ -147,10 +147,14 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
 
-[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node")]
+[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node", "tongue_line_node")]
 script = ExtResource("10_xrtyr")
 tongue_hitbox = NodePath("TonguePoint/Hitbox")
 tongue_tip_node = NodePath("TonguePoint")
+tongue_line_node = NodePath("Sprite3D")
+
+[node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
+texture = ExtResource("11_daiq8")
 
 [node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
 

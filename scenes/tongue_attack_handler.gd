@@ -13,6 +13,7 @@ var tongue_target_position:Vector3
 @export var retraction_acceleration_speed:float = 1
 @export var fall_to_floor_speed:float = 0.5
 @export var tongue_tip_node:Node3D
+@export var tongue_line_node:Sprite3D
 var retraction_acceleration_counter = 0
 
 enum TongueState {
@@ -26,13 +27,14 @@ enum TongueState {
 signal attached(target:Node3D, position:Vector3)
 
 func _tongue_hit_object(body:Node3D) -> void:
-	print(body)
-	tongue_hitbox.is_active = true
+	tongue_state = TongueState.ATTACHED
+	tongue_attached_node = body
 
 func _ready() -> void:
 	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
 func _process(delta: float) -> void:
+	tongue_line_node.global_position = (tongue_tip_node.global_position - self.global_position)/2 + self.global_position
 	if not usable:
 		_start_retracting()
 	match tongue_state:
@@ -47,14 +49,14 @@ func _process(delta: float) -> void:
 				query.collide_with_areas = true
 				query.collide_with_bodies = true
 				var result = space_state.intersect_ray(query)
-				print(result)
-				if result != null:
+				if result != null and result.has("position"):
 					var target_point:Vector3 = result.position
 					target_point.y = self.position.y
 					tongue_target_position = target_point
 					tongue_state = TongueState.EXTENDING
 					tongue_hitbox.is_active = true
 					tongue_tip_node.reparent(get_tree().get_root())
+					tongue_hitbox.start_detecting_hits()
 
 		TongueState.EXTENDING:
 			_test_for_retracting()
@@ -74,11 +76,16 @@ func _process(delta: float) -> void:
 			_test_for_retracting()
 		TongueState.ATTACHED:
 			_test_for_retracting()
+			if tongue_attached_node != null:
+				tongue_attached_position = tongue_attached_node.global_position
+				tongue_tip_node.global_position = tongue_attached_position
 
 func _test_for_retracting():
 	if Input.is_action_just_released("tongue_attack"):
 		tongue_state = TongueState.RETRACTING
 		tongue_hitbox.is_active = false
+		tongue_hitbox.stop_detecting_hits()
 
 func _start_retracting():
 	tongue_state = TongueState.RETRACTING
+	tongue_hitbox.stop_detecting_hits()
