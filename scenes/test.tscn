@@ -135,7 +135,7 @@ max_health = 100.0
 [node name="Hitboxes" type="Node3D" parent="Character/Systems/HitAndHurt"]
 
 [node name="hitbox_slash" type="Area3D" parent="Character/Systems/HitAndHurt/Hitboxes"]
-collision_layer = 3
+collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_uacia")
 
@@ -160,12 +160,12 @@ texture = ExtResource("11_daiq8")
 
 [node name="Hitbox" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
 collision_layer = 0
-collision_mask = 0
+collision_mask = 3
 script = ExtResource("7_uacia")
 metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.066467285, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.066467285, 0, 0)
 shape = SubResource("BoxShape3D_c6rvn")
 
 [node name="Visual" type="Node3D" parent="Character"]

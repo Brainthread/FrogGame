@@ -67,7 +67,7 @@ func _state_update(_delta: float):
 
 func hit_object(object):
 	var hurtbox = object
-	if hurtbox.verify_hit():
+	if hurtbox is Hurtbox and hurtbox.verify_hit():
 		apply_damage(hurtbox)
 
 func apply_damage(hurtbox):

@@ -23,23 +23,20 @@ func _process(_delta: float) -> void:
 func detect_hit() -> void:
 	var overlapping_bodies = get_overlapping_bodies()
 	var overlapping_areas = get_overlapping_areas()
-
 	for body in overlapping_bodies:
-		if body not in hits:
-			hits[body] = true
-			hit_entity.emit(body)
-
+		detect_collision(body)
 	for area in overlapping_areas:
-		if area not in hits:
-			hits[area] = true
-			hit_entity.emit(area)
+		detect_collision(area)
 
 func _on_body_entered(body: Node3D) -> void:
-	if is_active && body not in hits:
-		hits[body] = true
-		hit_entity.emit(body)
+	if is_active:
+		detect_collision(body)
 
 func _on_area_entered(area: Area3D) -> void:
-	if is_active && area not in hits:
-		hits[area] = true
-		hit_entity.emit(area)
+	if is_active:
+		detect_collision(area)
+
+func detect_collision(node: Node3D) -> void:
+	if node not in hits:
+		hits[node] = true
+		hit_entity.emit(node)
