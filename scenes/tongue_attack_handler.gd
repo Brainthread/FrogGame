@@ -39,6 +39,8 @@ func _process(delta: float) -> void:
 		_start_retracting()
 	match tongue_state:
 		TongueState.WAITING:
+			tongue_tip_node.visible = false
+			tongue_line_node.visible = false
 			if Input.is_action_just_pressed("tongue_attack"):
 				var cam = get_viewport().get_camera_3d()
 				var ray_origin = InputReader.get_mouse_world_origin(cam)
@@ -57,6 +59,8 @@ func _process(delta: float) -> void:
 					tongue_hitbox.is_active = true
 					tongue_tip_node.reparent(get_tree().get_root())
 					tongue_hitbox.start_detecting_hits()
+					tongue_tip_node.visible = true
+					tongue_line_node.visible = true
 
 		TongueState.EXTENDING:
 			_test_for_retracting()
