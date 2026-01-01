@@ -2,8 +2,9 @@ extends Node3D
 
 var usable:bool = true
 var tongue_state:TongueState = TongueState.WAITING
+var attached_is_heavy:bool = false
 var tongue_attached_node:Node3D = null
-var tongue_attached_position:Vector3
+var tongue_attached_node_offset:Vector3
 var tongue_target_position:Vector3
 @export var mouth_marker:Node3D
 @export var tongue_hitbox:Hitbox
@@ -24,12 +25,24 @@ enum TongueState {
 	ATTACHED
 }
 
-signal attached(target:Node3D, position:Vector3)
+signal attached(target:Node3D, offset:Vector3, heavy:bool)
+
+func attached_object_destroyed() -> void:
+	_start_retracting()
 
 func _tongue_hit_object(body:Node3D) -> void:
+	if !usable:
+		return
 	tongue_state = TongueState.ATTACHED
+	attached_is_heavy = true
+	tongue_attached_node_offset = body.global_position - tongue_tip_node.global_position
+	if body is DraggableHurtbox:
+		attached_is_heavy = body.is_heavy
+		tongue_attached_node_offset = Vector3.ZERO
 	tongue_attached_node = body
-
+	if tongue_attached_node != null && tongue_attached_node is DraggableHurtbox:
+		tongue_attached_node.start_dragging(self)
+	
 func _ready() -> void:
 	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
@@ -42,25 +55,7 @@ func _process(delta: float) -> void:
 			tongue_tip_node.visible = false
 			tongue_line_node.visible = false
 			if Input.is_action_just_pressed("tongue_attack"):
-				var cam = get_viewport().get_camera_3d()
-				var ray_origin = InputReader.get_mouse_world_origin(cam)
-				var ray_normal = InputReader.get_mouse_world_normal(cam)
-				var space_state = get_world_3d().direct_space_state
-				var ray_end = ray_origin + ray_normal * 100
-				var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
-				query.collide_with_areas = true
-				query.collide_with_bodies = true
-				var result = space_state.intersect_ray(query)
-				if result != null and result.has("position"):
-					var target_point:Vector3 = result.position
-					target_point.y = self.position.y
-					tongue_target_position = target_point
-					tongue_state = TongueState.EXTENDING
-					tongue_hitbox.is_active = true
-					tongue_tip_node.reparent(get_tree().get_root())
-					tongue_hitbox.start_detecting_hits()
-					tongue_tip_node.visible = true
-					tongue_line_node.visible = true
+				tongue_attack_raycast()
 
 		TongueState.EXTENDING:
 			_test_for_retracting()
@@ -80,16 +75,38 @@ func _process(delta: float) -> void:
 			_test_for_retracting()
 		TongueState.ATTACHED:
 			_test_for_retracting()
-			if tongue_attached_node != null:
-				tongue_attached_position = tongue_attached_node.global_position
-				tongue_tip_node.global_position = tongue_attached_position
+			if tongue_attached_node == null:
+				_start_retracting()
+			tongue_tip_node.global_position = tongue_attached_node.global_position + tongue_attached_node_offset
 
 func _test_for_retracting():
 	if Input.is_action_just_released("tongue_attack"):
-		tongue_state = TongueState.RETRACTING
-		tongue_hitbox.is_active = false
-		tongue_hitbox.stop_detecting_hits()
+		_start_retracting()
 
 func _start_retracting():
+	if tongue_attached_node != null && tongue_attached_node is DraggableHurtbox:
+		tongue_attached_node.stop_dragging()
 	tongue_state = TongueState.RETRACTING
+	tongue_hitbox.is_active = false
 	tongue_hitbox.stop_detecting_hits()
+	
+func tongue_attack_raycast():
+	var cam = get_viewport().get_camera_3d()
+	var ray_origin = InputReader.get_mouse_world_origin(cam)
+	var ray_normal = InputReader.get_mouse_world_normal(cam)
+	var space_state = get_world_3d().direct_space_state
+	var ray_end = ray_origin + ray_normal * 100
+	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	query.collide_with_areas = true
+	query.collide_with_bodies = true
+	var result = space_state.intersect_ray(query)
+	if result != null and result.has("position"):
+		var target_point:Vector3 = result.position
+		target_point.y = self.position.y
+		tongue_target_position = target_point
+		tongue_state = TongueState.EXTENDING
+		tongue_hitbox.is_active = true
+		tongue_tip_node.reparent(get_tree().get_root())
+		tongue_hitbox.start_detecting_hits()
+		tongue_tip_node.visible = true
+		tongue_line_node.visible = true
