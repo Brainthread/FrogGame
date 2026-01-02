@@ -1,7 +1,7 @@
 extends Hurtbox
 class_name DraggableHurtbox
 
-var is_heavy: bool = false
+@export var is_heavy: bool = false
 signal started_being_dragged(dragger) 
 signal stopped_being_dragged
 
@@ -16,8 +16,8 @@ func apply_damage(damage) -> void:
 
 func start_dragging(dragger) -> void:
 	started_being_dragged.emit(dragger)
-	print("being dragged")
+	print(name, ": being dragged")
 
 func stop_dragging() -> void:
 	stopped_being_dragged.emit()
-	print("stopped being dragged")
+	print(name, ": stopped being dragged")

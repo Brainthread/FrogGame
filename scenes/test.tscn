@@ -111,8 +111,13 @@ jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
 
-[node name="TongueAttackHeavy" type="Node3D" parent="Character/Systems/StateMachine"]
+[node name="TongueAttackHeavy" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_state", "tongue_attack_manager", "body")]
 script = ExtResource("4_7yos8")
+jump_state = NodePath("../Jump")
+airborne_state = NodePath("../Airborne")
+ground_state = NodePath("../Grounded")
+tongue_attack_manager = NodePath("../../SpecialHandler/TongueAttackHandler")
+body = NodePath("../../..")
 
 [node name="Jump" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
 script = ExtResource("5_ajshl")
@@ -148,11 +153,13 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
 
-[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node", "tongue_line_node")]
+[node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node", "tongue_line_node", "state_manager", "state_machine_state")]
 script = ExtResource("10_xrtyr")
 tongue_hitbox = NodePath("TonguePoint/Hitbox")
 tongue_tip_node = NodePath("TonguePoint")
 tongue_line_node = NodePath("Sprite3D")
+state_manager = NodePath("../../StateMachine")
+state_machine_state = NodePath("../../StateMachine/TongueAttackHeavy")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
 texture = ExtResource("11_daiq8")
@@ -242,11 +249,13 @@ max_health = 30.0
 script = ExtResource("16_c6rvn")
 body = NodePath("../..")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
+dragforce = 10
 
 [node name="HitAndHurt" type="Node3D" parent="Mosquitoknight/Systems"]
 
 [node name="Hurtbox" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt"]
 script = ExtResource("16_daiq8")
+is_heavy = true
 metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hurtbox"]
