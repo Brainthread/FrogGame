@@ -238,8 +238,10 @@ script = ExtResource("7_7mbro")
 health = 30.0
 max_health = 30.0
 
-[node name="Node3D" type="Node3D" parent="Mosquitoknight/Systems"]
+[node name="DragabilityManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
 script = ExtResource("16_c6rvn")
+body = NodePath("../..")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
 
 [node name="HitAndHurt" type="Node3D" parent="Mosquitoknight/Systems"]
 
@@ -271,6 +273,7 @@ collision_layer = 0
 shape = SubResource("SphereShape3D_ppyta")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="Mosquitoknight"]
+avoidance_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 9.191, 12.335)

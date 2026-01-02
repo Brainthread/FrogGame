@@ -17,7 +17,7 @@ func _exit_state():
 	pass
 
 func _state_update(_delta: float):	
-	var input_vector = Vector3(InputReader.movement_vector.y, 0, InputReader.movement_vector.x).normalized()
+	var input_vector = Vector3(-InputReader.movement_vector.x, 0, InputReader.movement_vector.y).normalized()
 	var horizontal_velocity = root.velocity
 	
 	horizontal_velocity.y = 0

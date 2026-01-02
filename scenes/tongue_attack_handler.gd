@@ -56,13 +56,11 @@ func _process(delta: float) -> void:
 			tongue_line_node.visible = false
 			if Input.is_action_just_pressed("tongue_attack"):
 				tongue_attack_raycast()
-
 		TongueState.EXTENDING:
 			_test_for_retracting()
 			tongue_tip_node.position = tongue_tip_node.position.move_toward(tongue_target_position, delta*extension_speed)
 			if tongue_tip_node.position.distance_to(tongue_target_position) < 0.01:
 				tongue_state = TongueState.FALLING
-
 		TongueState.RETRACTING:
 			if tongue_tip_node.position.distance_to(self.global_position) < 0.1:
 				tongue_state = TongueState.WAITING

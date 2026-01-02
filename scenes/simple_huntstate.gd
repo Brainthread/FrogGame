@@ -3,6 +3,11 @@ extends State
 @export var player:Node3D
 @export var nav:NavigationAgent3D
 @export var body:CharacterBody3D
+@export var movement_speed:float = 2
+@export var acceleration:float = 1.5
+@export var deceleration:float = 5
+var movement_direction:Vector3
+
 
 func _enter_state() -> void:
 	_set_nav_target()
@@ -21,5 +26,12 @@ func _state_physics_update(delta: float) -> void:
 	var local_destination = destination - body.global_position
 	var direction = local_destination.normalized()
 	
-	body.velocity = direction * 2.0
+	movement_direction = direction
+	var direction_dot = body.velocity.dot(direction)
+	var acceleration_parameter = acceleration if direction_dot > 0 else deceleration 
+	
+	var yvel = body.velocity.y
+	body.velocity = body.velocity.move_toward(movement_direction*movement_speed, delta*acceleration_parameter)
+	yvel -= 9.82*delta
+	body.velocity.y = yvel
 	body.move_and_slide()
