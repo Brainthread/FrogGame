@@ -54,7 +54,14 @@ func _ready() -> void:
 	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
 func _process(delta: float) -> void:
-	tongue_line_node.global_position = (tongue_tip_node.global_position - self.global_position)/2 + self.global_position
+	var dir = tongue_tip_node.global_position - self.global_position
+	var dir2 = Vector2(dir.x, dir.z).normalized()
+	var id = Vector2.RIGHT.normalized()
+	var z_angle = (id).angle_to(dir2)+PI/2
+	print(rad_to_deg(z_angle))
+	tongue_line_node.global_position = (dir)/2 + self.global_position
+	tongue_line_node.global_rotation = Vector3(90, 0, z_angle)
+	tongue_line_node.scale = Vector3(1.0, dir.length(), 1.0)
 	if not usable:
 		_start_retracting()
 	match tongue_state:
@@ -98,6 +105,9 @@ func _start_retracting():
 
 func get_direction_to_attached(origin:Node3D) -> Vector3:
 	return (tongue_attached_node.global_position + tongue_attached_node_offset - origin.position).normalized()
+
+func get_attached_body() -> Node3D:
+	return tongue_attached_node
 
 func tongue_attack_raycast():
 	var cam = get_viewport().get_camera_3d()

@@ -156,18 +156,20 @@ shape = SubResource("BoxShape3D_uacia")
 [node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node", "tongue_line_node", "state_manager", "state_machine_state")]
 script = ExtResource("10_xrtyr")
 tongue_hitbox = NodePath("TonguePoint/Hitbox")
+retraction_speed = 16.0
 tongue_tip_node = NodePath("TonguePoint")
 tongue_line_node = NodePath("Sprite3D")
 state_manager = NodePath("../../StateMachine")
 state_machine_state = NodePath("../../StateMachine/TongueAttackHeavy")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
 texture = ExtResource("11_daiq8")
 
 [node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
-transform = Transform3D(0.2, 0, 0, 0, 0.19562952, 0.041582342, 0, -0.041582342, 0.19562952, 0, 0, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.04158233, -0.19562952, 0, 0.19562952, 0.04158233, 0, 0, 0)
 texture = ExtResource("11_daiq8")
 
 [node name="Hitbox" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]

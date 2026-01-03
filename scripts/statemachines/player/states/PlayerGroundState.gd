@@ -43,7 +43,7 @@ func _state_update(_delta: float):
 	horizontal_velocity = lerp(horizontal_velocity, input_vector * movement_speed, _delta * acceleration)
 	var new_velocity = horizontal_velocity
 	new_velocity.y = root.velocity.y + g * _delta
-
+	
 	root.velocity = new_velocity
 	root.move_and_slide()
 

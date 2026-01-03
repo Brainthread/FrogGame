@@ -24,13 +24,15 @@ func _state_update(_delta: float):
 
 func end_attachment():
 	state_machine._change_state(ground_state)
-	
 
 func _state_physics_update(_delta: float):
 	if attached_node != null:
 		var direction = tongue_attack_manager.get_direction_to_attached(body)
 		var force = direction * tongue_attack_manager.attach_force
 		body.velocity = force
+		if body.global_position.distance_to(attached_node.global_position) < 0.5:
+			tongue_attack_manager._start_retracting()
 	else:
-		end_attachment()
+		tongue_attack_manager._start_retracting()
+	
 	body.move_and_slide()
