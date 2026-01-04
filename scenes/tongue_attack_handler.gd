@@ -1,4 +1,5 @@
 extends Node3D
+class_name TongueAttackManager
 
 var usable:bool = true
 var tongue_state:TongueState = TongueState.WAITING
@@ -6,6 +7,7 @@ var attached_is_heavy:bool = false
 var tongue_attached_node:Node3D = null
 var tongue_attached_node_offset:Vector3
 var tongue_target_position:Vector3
+@export var attach_force:float = 10
 @export var mouth_marker:Node3D
 @export var tongue_hitbox:Hitbox
 @export var max_length:float = 1
@@ -15,6 +17,8 @@ var tongue_target_position:Vector3
 @export var fall_to_floor_speed:float = 0.5
 @export var tongue_tip_node:Node3D
 @export var tongue_line_node:Sprite3D
+@export var state_manager:FrogStateMachine
+@export var state_machine_state:PlayerTongueAttackState
 var retraction_acceleration_counter = 0
 
 enum TongueState {
@@ -40,14 +44,24 @@ func _tongue_hit_object(body:Node3D) -> void:
 		attached_is_heavy = body.is_heavy
 		tongue_attached_node_offset = Vector3.ZERO
 	tongue_attached_node = body
-	if tongue_attached_node != null && tongue_attached_node is DraggableHurtbox:
+	if tongue_attached_node != null && tongue_attached_node is DraggableHurtbox && tongue_attached_node.is_heavy == false:
 		tongue_attached_node.start_dragging(self)
+	elif tongue_attached_node != null:
+		state_manager._change_state(state_machine_state)
+	
 	
 func _ready() -> void:
 	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
 func _process(delta: float) -> void:
-	tongue_line_node.global_position = (tongue_tip_node.global_position - self.global_position)/2 + self.global_position
+	var dir = tongue_tip_node.global_position - self.global_position
+	var dir2 = Vector2(dir.x, dir.z).normalized()
+	var id = Vector2.RIGHT.normalized()
+	var z_angle = (id).angle_to(dir2)+PI/2
+	print(rad_to_deg(z_angle))
+	tongue_line_node.global_position = (dir)/2 + self.global_position
+	tongue_line_node.global_rotation = Vector3(90, 0, z_angle)
+	tongue_line_node.scale = Vector3(1.0, dir.length(), 1.0)
 	if not usable:
 		_start_retracting()
 	match tongue_state:
@@ -87,7 +101,14 @@ func _start_retracting():
 	tongue_state = TongueState.RETRACTING
 	tongue_hitbox.is_active = false
 	tongue_hitbox.stop_detecting_hits()
-	
+	state_machine_state.end_attachment()
+
+func get_direction_to_attached(origin:Node3D) -> Vector3:
+	return (tongue_attached_node.global_position + tongue_attached_node_offset - origin.position).normalized()
+
+func get_attached_body() -> Node3D:
+	return tongue_attached_node
+
 func tongue_attack_raycast():
 	var cam = get_viewport().get_camera_3d()
 	var ray_origin = InputReader.get_mouse_world_origin(cam)
