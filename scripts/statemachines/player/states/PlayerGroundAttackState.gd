@@ -5,6 +5,7 @@ class_name PlayerGroundAttackState
 @export var slice_movement_force:float = 5
 @export var attack_time:float = 0.5
 @export var attack_windup_time:float = 0.2
+@export var knockback_amount:float = 5.0
 var attack_timer = 0
 var attack_windup_timer = 0
 var wind_up = false
@@ -70,9 +71,11 @@ func hit_object(object):
 	if hurtbox is Hurtbox and hurtbox.verify_hit():
 		apply_damage(hurtbox)
 
-func apply_damage(hurtbox):
+func apply_damage(hurtbox:Hurtbox):
 	print("hit: " + hurtbox.name)
 	hurtbox.apply_damage(10);
+	var knockback_direction = Vector3(attack_direction.z, 0, attack_direction.x)
+	hurtbox.apply_effects({"knockback" : -knockback_amount*knockback_direction});
 
 func set_hitbox_rotation():
 	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x)

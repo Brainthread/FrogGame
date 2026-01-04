@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=34 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -17,9 +17,11 @@
 [ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="11_daiq8"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scenes/damage_manager.gd" id="12_7mbro"]
 [ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scenes/simple_huntstate.gd" id="14_ff6ho"]
+[ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scenes/character_physics_body.gd" id="14_si7kk"]
 [ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
 [ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scenes/Draggable.gd" id="16_c6rvn"]
 [ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_daiq8"]
+[ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scenes/effect_manager.gd" id="17_pn65j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -207,6 +209,7 @@ shape = SubResource("SphereShape3D_ppyta")
 [node name="Mosquitoknight" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
 collision_layer = 0
+script = ExtResource("14_si7kk")
 
 [node name="Visual" type="Node3D" parent="Mosquitoknight"]
 
@@ -237,6 +240,11 @@ script = ExtResource("6_44saj")
 script = ExtResource("7_7mbro")
 health = 30.0
 max_health = 30.0
+
+[node name="EffectManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
+script = ExtResource("17_pn65j")
+body = NodePath("../..")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
 
 [node name="DragabilityManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
 script = ExtResource("16_c6rvn")
