@@ -74,8 +74,8 @@ func hit_object(object):
 func apply_damage(hurtbox:Hurtbox):
 	print("hit: " + hurtbox.name)
 	hurtbox.apply_damage(10);
-	var knockback_direction = Vector3(attack_direction.z, 0, attack_direction.x)
-	hurtbox.apply_effects({"knockback" : -knockback_amount*knockback_direction});
+	var knockback_direction = Vector3(attack_direction.x, 0, attack_direction.z)
+	hurtbox.apply_effects({"knockback" : knockback_amount * knockback_direction});
 
 func set_hitbox_rotation():
 	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x)
