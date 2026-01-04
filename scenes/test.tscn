@@ -117,8 +117,7 @@ jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
 ground_state = NodePath("../Grounded")
 effect_manager = NodePath("../../EffectManager")
-deceleration = 30.0
-attack_knockback_force = 8
+attack_deceleration = 30.0
 
 [node name="TongueAttackHeavy" type="Node3D" parent="Character/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_state", "tongue_attack_manager", "body")]
 script = ExtResource("4_7yos8")

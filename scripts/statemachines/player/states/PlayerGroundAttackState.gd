@@ -18,7 +18,8 @@ var attack_direction:Vector3
 @export var airborne_state:PlayerAirborneState
 @export var ground_state:PlayerGroundState
 @export var effect_manager:EffectManager
-@export var deceleration:float = 10
+@export var attack_deceleration:float = 10
+@export var bounce_deceleration:float = 5
 
 var can_take_attack_knockback = true
 @export var attack_knockback_force = 5
@@ -52,7 +53,10 @@ func _exit_state():
 func _state_update(_delta: float):
 	root.move_and_slide()
 	attack_windup_timer += _delta
-	root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*deceleration)
+	if can_take_attack_knockback:
+		root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*attack_deceleration)
+	else:
+		root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*bounce_deceleration)
 	if attack_windup_timer < attack_windup_time:
 		return
 	if not wind_up:

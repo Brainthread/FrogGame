@@ -31,8 +31,8 @@ func _state_update(_delta: float):
 	if Input.is_action_pressed("jump"):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
-		#state_machine._change_state(jump_state)
-		root.add_force(Vector3.RIGHT*10)
+		state_machine._change_state(jump_state)
+		#root.add_force(Vector3.RIGHT*10)
 	if Input.is_action_just_pressed("attack"):
 		state_machine._change_state(ground_attack_state)
 	if not state_machine._is_grounded():
