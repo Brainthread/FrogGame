@@ -2,7 +2,7 @@ extends State
 class_name PlayerGroundAttackState
 
 @export var attack_substates = null
-@export var slice_movement_force:float = 5
+@export var slice_movement_force:float = 4
 @export var attack_time:float = 0.5
 @export var attack_windup_time:float = 0.2
 @export var knockback_amount:float = 5.0
@@ -17,6 +17,11 @@ var attack_direction:Vector3
 @export var jump_state:PlayerJumpState
 @export var airborne_state:PlayerAirborneState
 @export var ground_state:PlayerGroundState
+@export var effect_manager:EffectManager
+@export var deceleration:float = 10
+
+var can_take_attack_knockback = true
+@export var attack_knockback_force = 5
 
 func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	state_machine = state_machine_node
@@ -31,11 +36,11 @@ func _enter_state():
 	attack_timer = 0
 	wind_up = false
 	attack_windup_timer = 0
+	can_take_attack_knockback = true
 	super._enter_state()
 	
 func _start_attack():
-	root.velocity = Vector3.ZERO
-	root.move_and_slide()
+	root.add_force(attack_direction*slice_movement_force)
 	start_registering_hits()
 	slash_fx.visible = true;
 
@@ -47,17 +52,12 @@ func _exit_state():
 func _state_update(_delta: float):
 	root.move_and_slide()
 	attack_windup_timer += _delta
+	root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*deceleration)
 	if attack_windup_timer < attack_windup_time:
-		var velz = root.velocity;
-		velz *= 1-0.2*_delta;
-		root.velocity = velz;
 		return
 	if not wind_up:
 		wind_up = true
 		_start_attack()
-	var vel = Vector3.ZERO
-	vel = slice_movement_curve.sample(attack_timer/attack_time) * attack_direction * slice_movement_force
-	root.velocity = vel
 	attack_timer += _delta
 	if attack_timer >= attack_time:
 		attack_timer = 0
@@ -70,6 +70,8 @@ func hit_object(object):
 	var hurtbox = object
 	if hurtbox is Hurtbox and hurtbox.verify_hit():
 		apply_damage(hurtbox)
+		if can_take_attack_knockback:
+			root.set_only_force(attack_knockback_force*-attack_direction)
 
 func apply_damage(hurtbox:Hurtbox):
 	print("hit: " + hurtbox.name)
