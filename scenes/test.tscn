@@ -73,6 +73,10 @@ radius = 10.1396
 
 [node name="Node3D" type="Node3D"]
 
+[node name="GameManager" type="Node3D" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager"]
+
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
 collision_layer = 4
