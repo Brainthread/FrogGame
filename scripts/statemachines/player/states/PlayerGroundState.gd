@@ -32,20 +32,12 @@ func _state_update(_delta: float):
 		jump_timer += _delta
 	if Input.is_action_just_released("jump"):
 		state_machine._change_state(jump_state)
+		#root.add_force(Vector3.RIGHT*10)
 	if Input.is_action_just_pressed("attack"):
 		state_machine._change_state(ground_attack_state)
 	if not state_machine._is_grounded():
 		state_machine._change_state(airborne_state)
 	
-	var input_vector = Vector3(-InputReader.movement_vector.x, 0, InputReader.movement_vector.y).normalized()
-	var horizontal_velocity = root.velocity
-	horizontal_velocity.y = 0
-	horizontal_velocity = lerp(horizontal_velocity, input_vector * movement_speed, _delta * acceleration)
-	var new_velocity = horizontal_velocity
-	new_velocity.y = root.velocity.y + g * _delta
-	
-	root.velocity = new_velocity
-	root.move_and_slide()
 
 	var mouse_vector = InputReader._get_mouse_object_offset(root).normalized()
 	var renderer = state_machine.renderer
@@ -55,5 +47,25 @@ func _state_update(_delta: float):
 		renderer.flip_h = true
 
 
+func calculate_new_velocity(target_velocity:Vector3, current_velocity:Vector3, delta:float) -> Vector3:
+	var new_velocity:Vector3 = current_velocity
+	var dot:float = target_velocity.dot(current_velocity)
+	if dot >= 0:
+		new_velocity = new_velocity.move_toward(target_velocity, delta*acceleration)
+	else:
+		new_velocity = new_velocity.move_toward(target_velocity, delta*deceleration)
+	return new_velocity
+	
+
+
 func _state_physics_update(_delta: float):
-	pass
+	var input_vector = Vector3(-InputReader.movement_vector.x, 0, InputReader.movement_vector.y).normalized()
+	var target_velocity = root.velocity
+	target_velocity.y = 0
+	target_velocity = input_vector * movement_speed
+	target_velocity.z /= sin(deg_to_rad(60))
+	
+	var new_velocity = calculate_new_velocity(target_velocity, root.velocity, _delta)
+	new_velocity.y = root.velocity.y + g * _delta
+	root.velocity = new_velocity
+	root.move_and_slide()
