@@ -58,9 +58,8 @@ func _process(delta: float) -> void:
 	var dir2 = Vector2(dir.x, dir.z).normalized()
 	var id = Vector2.RIGHT.normalized()
 	var z_angle = (id).angle_to(dir2)+PI/2
-	print(rad_to_deg(z_angle))
 	tongue_line_node.global_position = (dir)/2 + self.global_position
-	tongue_line_node.global_rotation = Vector3(90, 0, z_angle)
+	tongue_line_node.rotation = Vector3(90, 0, z_angle)
 	tongue_line_node.scale = Vector3(1.0, dir.length(), 1.0)
 	if not usable:
 		_start_retracting()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=36 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://c4mpe0vm2olow" path="res://scripts/tongue_attack_handler.gd" id="10_xrtyr"]
 [ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="11_daiq8"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="12_7mbro"]
+[ext_resource type="Texture2D" uid="uid://ys2vv7uhhv5b" path="res://sprite/tongue.png" id="14_5f8cm"]
 [ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scripts/simple_huntstate.gd" id="14_ff6ho"]
 [ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="14_si7kk"]
 [ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
@@ -29,7 +30,7 @@ radius = 0.40527344
 height = 1.3397183
 
 [sub_resource type="Curve" id="Curve_at5dv"]
-_data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.054347828, 1), 0.0, 0.0, 0, 0, Vector2(0.58399993, 0.18336165), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.08399999, 0.9558573), 0.0, 0.0, 0, 0, Vector2(0.268, 0.22750425), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
@@ -182,6 +183,7 @@ shape = SubResource("BoxShape3D_ajshl")
 [node name="SpecialHandler" type="Node3D" parent="Character/Systems"]
 
 [node name="TongueAttackHandler" type="Node3D" parent="Character/Systems/SpecialHandler" node_paths=PackedStringArray("tongue_hitbox", "tongue_tip_node", "tongue_line_node", "state_manager", "state_machine_state")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("10_xrtyr")
 tongue_hitbox = NodePath("TonguePoint/Hitbox")
 retraction_speed = 16.0
@@ -191,13 +193,14 @@ state_manager = NodePath("../../StateMachine")
 state_machine_state = NodePath("../../StateMachine/TongueAttackHeavy")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
-texture = ExtResource("11_daiq8")
+transform = Transform3D(5, 0, 0, 0, 3.8302221, 3.2139378, 0, -3.2139378, 3.8302221, 0, 0, 0)
+texture_filter = 0
+texture = ExtResource("14_5f8cm")
 
 [node name="TonguePoint" type="Node3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler"]
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
-transform = Transform3D(0.2, 0, 0, 0, 0.04158233, -0.19562952, 0, 0.19562952, 0.04158233, 0, 0, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.15320887, 0.1285575, 0, -0.1285575, 0.15320887, 0, 0, 0)
 texture = ExtResource("11_daiq8")
 
 [node name="Hitbox" type="Area3D" parent="Character/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
@@ -215,15 +218,15 @@ shape = SubResource("BoxShape3D_c6rvn")
 [node name="Slash-fx" type="Node3D" parent="Character/Visual"]
 
 [node name="Node3D" type="Node3D" parent="Character/Visual/Slash-fx"]
-transform = Transform3D(0.97814757, 0.20791169, 0, -0.20791169, 0.97814757, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Visual/Slash-fx/Node3D"]
-transform = Transform3D(6.461188e-07, -4.8907385, -1.0395584, 9.088107e-08, -1.0395584, 4.8907385, -5, -6.508949e-07, -4.544054e-08, 0.57455003, -0.002635479, 0)
+transform = Transform3D(-2.1855695e-07, -5.0000005, 2.1855696e-07, 1.9106854e-14, 2.1855696e-07, 5.0000005, -5, 2.1855696e-07, 9.553428e-15, 0.57455003, -0.002635479, 0)
 texture_filter = 0
 texture = ExtResource("7_jcd4p")
 
 [node name="Sprite3D" type="Sprite3D" parent="Character/Visual"]
-transform = Transform3D(5, 0, 0, 0, 4.890738, 1.0395585, 0, -1.0395585, 4.890738, -0.0842151, 0.04693842, -8.31124e-09)
+transform = Transform3D(5, 0, 0, 0, 3.8302221, 3.2139378, 0, -3.2139378, 3.8302221, -0.0842151, -0.08068371, -8.31124e-09)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
@@ -254,7 +257,7 @@ mesh = SubResource("BoxMesh_6uqi0")
 skeleton = NodePath("../..")
 
 [node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual"]
-transform = Transform3D(5, 0, 0, 0, 4.890738, 1.0395585, 0, -1.0395585, 4.890738, -0.084215164, 0.04693839, 0)
+transform = Transform3D(5, 0, 0, 0, 3.8302221, 3.2139378, 0, -3.2139378, 3.8302221, -0.084215164, -0.103452265, 0)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
@@ -328,6 +331,7 @@ avoidance_enabled = true
 transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 9.191, 12.335)
 projection = 1
 current = true
+fov = 44.9
 size = 11.849
 far = 30.64
 
