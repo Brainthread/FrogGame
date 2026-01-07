@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=37 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -24,6 +24,7 @@
 [ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_daiq8"]
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="17_pn65j"]
 [ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="18_pn65j"]
+[ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scenes/enemy_attack_state.gd" id="24_gm488"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -312,6 +313,9 @@ script = ExtResource("14_ff6ho")
 player = NodePath("../../../../Character")
 nav = NodePath("../../../NavigationAgent3D")
 body = NodePath("../../..")
+
+[node name="EnemyAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager"]
+script = ExtResource("24_gm488")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
