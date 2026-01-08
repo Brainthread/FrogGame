@@ -1,0 +1,25 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://cq31wu4xny0ql"]
+
+[ext_resource type="Shader" uid="uid://cmlubo6ik8ol3" path="res://shaders/water.gdshader" id="1_6gfwt"]
+[ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="2_4lgl7"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4lgl7"]
+noise_type = 3
+frequency = 0.4
+fractal_octaves = 10
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6tan1"]
+noise = SubResource("FastNoiseLite_4lgl7")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_6gfwt")
+shader_parameter/albedo = Color(0.41960785, 0.6156863, 0.62352943, 1)
+shader_parameter/main_texture_tiling = Vector2(10, 10)
+shader_parameter/main_texture = ExtResource("2_4lgl7")
+shader_parameter/wave_texture_tiling = Vector2(10, 10)
+shader_parameter/wave_texture = SubResource("NoiseTexture2D_6tan1")
+shader_parameter/noise_scale = 10.0
+shader_parameter/height_scale = 0.4
+shader_parameter/time_scale = 0.4

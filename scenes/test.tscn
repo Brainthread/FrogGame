@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=40 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="17_pn65j"]
 [ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="18_pn65j"]
 [ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scenes/enemy_attack_state.gd" id="24_gm488"]
+[ext_resource type="Material" uid="uid://cq31wu4xny0ql" path="res://materials/water.tres" id="26_kay4s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
 radius = 0.40527344
@@ -77,6 +78,13 @@ height = 0.564941
 radius = 10.1396
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gm488"]
+size = Vector3(50, 1, 50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gm488"]
+material = ExtResource("26_kay4s")
+size = Vector2(50, 50)
+subdivide_width = 90
+subdivide_depth = 90
 
 [node name="Node3D" type="Node3D"]
 
@@ -378,9 +386,10 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
 shape = SubResource("CylinderShape3D_g14j6")
 
 [node name="Area3D" type="Area3D" parent="."]
-transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, -3.3249512, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.3249512, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("BoxShape3D_gm488")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("PlaneMesh_gm488")
