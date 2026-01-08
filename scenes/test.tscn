@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=38 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -75,6 +75,8 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Arr
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_g14j6"]
 height = 0.564941
 radius = 10.1396
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gm488"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -249,6 +251,7 @@ shape = SubResource("SphereShape3D_ppyta")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
 collision_layer = 0
 script = ExtResource("14_si7kk")
+mass = 0.4
 
 [node name="Visual" type="Node3D" parent="Mosquitoknight"]
 
@@ -265,6 +268,20 @@ texture_filter = 0
 texture = ExtResource("9_ghpyy")
 
 [node name="Systems" type="Node3D" parent="Mosquitoknight"]
+
+[node name="StateManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("15_5jxlq")
+
+[node name="SimpleHuntstate" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("player", "nav", "body")]
+script = ExtResource("14_ff6ho")
+player = NodePath("../../../../Character")
+nav = NodePath("../../../NavigationAgent3D")
+body = NodePath("../../..")
+acceleration = 10.0
+deceleration = 30.0
+
+[node name="EnemyAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager"]
+script = ExtResource("24_gm488")
 
 [node name="DamageManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
 script = ExtResource("12_7mbro")
@@ -304,18 +321,6 @@ metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hurtbox"]
 shape = SubResource("BoxShape3D_ajshl")
-
-[node name="StateManager" type="Node3D" parent="Mosquitoknight/Systems"]
-script = ExtResource("15_5jxlq")
-
-[node name="SimpleHuntstate" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("player", "nav", "body")]
-script = ExtResource("14_ff6ho")
-player = NodePath("../../../../Character")
-nav = NodePath("../../../NavigationAgent3D")
-body = NodePath("../../..")
-
-[node name="EnemyAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager"]
-script = ExtResource("24_gm488")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
@@ -371,3 +376,11 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Lily_pad/StaticBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
 shape = SubResource("CylinderShape3D_g14j6")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, -3.3249512, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_gm488")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Area3D"]
