@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=41 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
@@ -22,6 +22,7 @@
 [ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
 [ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scripts/Draggable.gd" id="16_c6rvn"]
 [ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_daiq8"]
+[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scenes/water_splash_manager.gd" id="16_j7bvy"]
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="17_pn65j"]
 [ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="18_pn65j"]
 [ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scenes/enemy_attack_state.gd" id="24_gm488"]
@@ -166,6 +167,10 @@ body = NodePath("../..")
 hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
 metadata/_custom_type_script = "uid://miugg8jpe2ku"
 
+[node name="WaterSplashManager" type="Node3D" parent="Character/Systems" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("16_j7bvy")
+hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+
 [node name="HitAndHurt" type="Node3D" parent="Character/Systems"]
 
 [node name="Hitboxes" type="Node3D" parent="Character/Systems/HitAndHurt"]
@@ -183,7 +188,7 @@ shape = SubResource("BoxShape3D_uacia")
 
 [node name="Hurtbox" type="Area3D" parent="Character/Systems/HitAndHurt/Hurtbox"]
 collision_layer = 4
-collision_mask = 4
+collision_mask = 12
 script = ExtResource("16_daiq8")
 is_heavy = true
 metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
@@ -305,6 +310,10 @@ script = ExtResource("7_7mbro")
 health = 30.0
 max_health = 30.0
 
+[node name="WaterSplashManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("16_j7bvy")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+
 [node name="EffectManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
 script = ExtResource("17_pn65j")
 body = NodePath("../..")
@@ -323,6 +332,7 @@ dragforce = 10
 [node name="HitAndHurt" type="Node3D" parent="Mosquitoknight/Systems"]
 
 [node name="Hurtbox" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt"]
+collision_mask = 9
 script = ExtResource("16_daiq8")
 is_heavy = true
 metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
@@ -385,11 +395,13 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
 shape = SubResource("CylinderShape3D_g14j6")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Water" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.3249512, 0)
+collision_layer = 8
+collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Water"]
 shape = SubResource("BoxShape3D_gm488")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
 mesh = SubResource("PlaneMesh_gm488")
