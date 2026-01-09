@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 InputReader="*res://scripts/InputReader.gd"
+NodePaths="*res://node_paths.gd"
 
 [input]
 

@@ -1,6 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=44 format=3 uid="uid://cp56kp11t4ngg"]
 
+[ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
+[ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scenes/path_manager.gd" id="2_2cnsr"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
 [ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_uacia"]
 [ext_resource type="Script" uid="uid://w3oxfr1xotrg" path="res://scripts/tongue_attack_state.gd" id="4_7yos8"]
@@ -22,10 +24,11 @@
 [ext_resource type="Script" uid="uid://b7n7c2ns6dass" path="res://scripts/imports/FiniteStateMachine.gd" id="15_5jxlq"]
 [ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scripts/Draggable.gd" id="16_c6rvn"]
 [ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_daiq8"]
-[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scenes/water_splash_manager.gd" id="16_j7bvy"]
+[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="16_j7bvy"]
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="17_pn65j"]
 [ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="18_pn65j"]
-[ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scenes/enemy_attack_state.gd" id="24_gm488"]
+[ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scripts/enemy_attack_state.gd" id="24_gm488"]
+[ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/effects/water_splash_effect.tscn" id="25_y81of"]
 [ext_resource type="Material" uid="uid://cq31wu4xny0ql" path="res://materials/water.tres" id="26_kay4s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
@@ -91,7 +94,26 @@ subdivide_depth = 90
 
 [node name="GameManager" type="Node3D" parent="."]
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GameManager"]
+[node name="AudioListener3D" type="AudioListener3D" parent="GameManager"]
+current = true
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource("1_1dqgb")
+volume_db = -11.378
+autoplay = true
+mix_target = 2
+parameters/looping = true
+
+[node name="PathManager" type="Node3D" parent="." node_paths=PackedStringArray("dynamic_scene_node", "effect_scene_node")]
+script = ExtResource("2_2cnsr")
+dynamic_scene_node = NodePath("Scene/DynamicScene")
+effect_scene_node = NodePath("Scene/DynamicScene/Effects")
+
+[node name="Scene" type="Node3D" parent="PathManager"]
+
+[node name="DynamicScene" type="Node3D" parent="PathManager/Scene"]
+
+[node name="Effects" type="Node3D" parent="PathManager/Scene/DynamicScene"]
 
 [node name="Character" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
@@ -170,6 +192,7 @@ metadata/_custom_type_script = "uid://miugg8jpe2ku"
 [node name="WaterSplashManager" type="Node3D" parent="Character/Systems" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("16_j7bvy")
 hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+splash_effect_enter = ExtResource("25_y81of")
 
 [node name="HitAndHurt" type="Node3D" parent="Character/Systems"]
 
@@ -313,6 +336,7 @@ max_health = 30.0
 [node name="WaterSplashManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("16_j7bvy")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
+splash_effect_enter = ExtResource("25_y81of")
 
 [node name="EffectManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
 script = ExtResource("17_pn65j")
@@ -395,6 +419,10 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
 shape = SubResource("CylinderShape3D_g14j6")
 
+[node name="GPUParticlesCollisionSDF3D" type="GPUParticlesCollisionSDF3D" parent="NavigationRegion3D/Lily_pad"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8540039, 0)
+size = Vector3(6.55, 2, 6.55)
+
 [node name="Water" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.3249512, 0)
 collision_layer = 8
@@ -405,3 +433,5 @@ shape = SubResource("BoxShape3D_gm488")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
 mesh = SubResource("PlaneMesh_gm488")
+
+[connection signal="exited_water" from="Mosquitoknight/Systems/WaterSplashManager" to="Mosquitoknight/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]

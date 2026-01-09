@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://coqouaigb7djy"]
+
+[ext_resource type="Script" uid="uid://6j14w70ot0ci" path="res://scripts/water_splash_effect.gd" id="1_mda85"]
+[ext_resource type="AudioStream" uid="uid://dd5wq6dxi3fjw" path="res://sound/sfx/11_labs/eod5lygievj-water-splash-sfx-1.mp3" id="2_cesas"]
+
+[sub_resource type="Gradient" id="Gradient_mda85"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.5383334, 0.85, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cesas"]
+gradient = SubResource("Gradient_mda85")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xpgv1"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0.01, 1, 0.01)
+spread = 11.579
+initial_velocity_min = 7.0
+initial_velocity_max = 8.0
+scale_min = 0.5
+scale_max = 7.0
+color_ramp = SubResource("GradientTexture1D_cesas")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p818l"]
+albedo_color = Color(0.3441, 0.8909399, 0.93, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gsknn"]
+material = SubResource("StandardMaterial3D_p818l")
+size = Vector2(0.2, 0.2)
+orientation = 2
+
+[sub_resource type="Skin" id="Skin_wl4wy"]
+
+[node name="WaterSplashEffect" type="Node3D"]
+script = ExtResource("1_mda85")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 90
+lifetime = 1.84
+one_shot = true
+explosiveness = 0.92
+process_material = SubResource("ParticleProcessMaterial_xpgv1")
+draw_pass_1 = SubResource("PlaneMesh_gsknn")
+draw_skin = SubResource("Skin_wl4wy")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_cesas")
+volume_db = 44.271
+unit_size = 10.7
+max_db = -2.515

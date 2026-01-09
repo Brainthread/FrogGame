@@ -15,6 +15,10 @@ func _ready() -> void:
 func on_water_entered(body:Area3D):
 	if body.collision_layer == 8:
 		print("ENTERED WATER")
+		var splash:WaterSplashEffect = splash_effect_enter.instantiate()
+		get_tree().root.add_child(splash)
+		splash.global_position = self.global_position
+		splash.do_splash()
 		entered_water.emit()
 	pass
 

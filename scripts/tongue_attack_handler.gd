@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 	var z_angle = (id).angle_to(dir2)+PI/2
 	tongue_line_node.global_position = (dir)/2 + self.global_position
 	tongue_line_node.rotation = Vector3(90, 0, z_angle)
-	tongue_line_node.scale = Vector3(1.0, dir.length(), 1.0)
+	tongue_line_node.scale = Vector3(1.0, dir.length() * 5, 1.0)
 	if not usable:
 		_start_retracting()
 	match tongue_state:
@@ -73,7 +73,7 @@ func _process(delta: float) -> void:
 			_test_for_retracting()
 			tongue_tip_node.position = tongue_tip_node.position.move_toward(tongue_target_position, delta*extension_speed)
 			if tongue_tip_node.position.distance_to(tongue_target_position) < 0.01:
-				tongue_state = TongueState.FALLING
+				_start_retracting()
 		TongueState.RETRACTING:
 			if tongue_tip_node.position.distance_to(self.global_position) < 0.1:
 				tongue_state = TongueState.WAITING
@@ -82,8 +82,6 @@ func _process(delta: float) -> void:
 			else:
 				retraction_acceleration_counter += delta
 				tongue_tip_node.position = tongue_tip_node.position.move_toward(self.global_position, delta*(retraction_speed+retraction_acceleration_counter)) 
-		TongueState.FALLING:
-			_test_for_retracting()
 		TongueState.ATTACHED:
 			_test_for_retracting()
 			if tongue_attached_node == null:
