@@ -21,7 +21,7 @@ scale_max = 7.0
 color_ramp = SubResource("GradientTexture1D_cesas")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p818l"]
-albedo_color = Color(0.3441, 0.8909399, 0.93, 1)
+albedo_color = Color(0.22067806, 0.77118164, 0.7392633, 1)
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1

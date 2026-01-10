@@ -1,12 +1,18 @@
 extends State
+class_name MosquitoHuntState
 
-@export var player:Node3D
+
+@export var aggro_manager:AggroManager
 @export var nav:NavigationAgent3D
 @export var body:CharacterBody3D
 @export var movement_speed:float = 2
 @export var acceleration:float = 1.5
 @export var deceleration:float = 5
 var movement_direction:Vector3
+
+@export var attack_range:float = 1
+
+@export var attack_state:State
 
 
 func _enter_state() -> void:
@@ -15,10 +21,13 @@ func _enter_state() -> void:
 func _set_nav_target() -> void:
 	while true:
 		await get_tree().create_timer(randf_range(0.3, 3)).timeout;
-		nav.target_position = player.position
+		nav.target_position = aggro_manager.target.global_position
 
 func _state_update(delta: float) -> void:
-	pass
+	var target_distance = aggro_manager.target.global_position.distance_to(self.global_position)
+	if  target_distance < attack_range:
+		state_machine._change_state(attack_state)
+		print("Mosquito knight: ATTACKING")
 
 
 func _state_physics_update(delta: float) -> void:
