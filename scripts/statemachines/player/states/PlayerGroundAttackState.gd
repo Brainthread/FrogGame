@@ -75,7 +75,7 @@ func hit_object(object):
 	if hurtbox is Hurtbox and hurtbox.verify_hit():
 		apply_damage(hurtbox)
 		if can_take_attack_knockback:
-			root.set_only_force(attack_knockback_force*-attack_direction)
+			root.set_only_force(attack_knockback_force * -attack_direction)
 
 func apply_damage(hurtbox:Hurtbox):
 	print("hit: " + hurtbox.name)
