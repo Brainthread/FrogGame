@@ -19,16 +19,21 @@ var attack_direction:Vector3
 func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 	super._initialize_state(state_machine_node, root_node)
 	hitbox.hit_entity.connect(hit_object)
+	attack_visual.visible = false
 
 func _enter_state():
 	is_active = true
 	attack_direction = (aggro_manager.target.global_position - root.global_position).normalized()
 	await get_tree().create_timer(windup_time).timeout
 	registering = true
-	set_hitbox_rotation(attack_direction)
-	set_slash_indicator_rotation(attack_direction)
+	set_hitbox_rotation()
+	set_slash_indicator_rotation()
+	hitbox.start_detecting_hits()
+	attack_visual.visible = true
 	root.add_force(attack_direction*attack_velocity)
 	await get_tree().create_timer(attack_time).timeout
+	hitbox.stop_detecting_hits()
+	attack_visual.visible = false
 	state_machine._change_state(next_state)
 
 func _exit_state():
@@ -58,8 +63,12 @@ func _state_physics_update(_delta: float):
 	root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*attack_deceleration)
 	root.move_and_slide()
 	
-func set_slash_indicator_rotation(attack_direction:Vector3) -> void:
-	pass
-	
-func set_hitbox_rotation(attack_direction:Vector3) -> void:
-	pass
+func set_hitbox_rotation():
+	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x)
+	var angle = -atan2(dir.x, dir.y)
+	hitbox.rotation = Vector3(hitbox.rotation.x, angle, hitbox.rotation.z)
+
+func set_slash_indicator_rotation():
+	var dir:Vector2 = Vector2(attack_direction.z, attack_direction.x)
+	var angle = -atan2(dir.x, dir.y)
+	attack_visual.rotation = Vector3(attack_visual.rotation.x, angle, attack_visual.rotation.z)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=48 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="16_j7bvy"]
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="17_pn65j"]
 [ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="18_pn65j"]
+[ext_resource type="Texture2D" uid="uid://dysd1pacl610e" path="res://sprite/Stab.png" id="23_75pfo"]
 [ext_resource type="Script" uid="uid://i1cinfaxm21s" path="res://scripts/statemachines/enemies/EnemyStateMachine.gd" id="23_gsk6d"]
 [ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scripts/enemy_attack_state.gd" id="24_gm488"]
 [ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/effects/water_splash_effect.tscn" id="25_y81of"]
@@ -59,7 +60,7 @@ material = SubResource("StandardMaterial3D_mf4mk")
 radius = 0.264354
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gsk6d"]
-size = Vector3(0.22875977, 1, 1.0995178)
+size = Vector3(0.34866333, 1, 0.67760944)
 
 [sub_resource type="Environment" id="Environment_g14j6"]
 ambient_light_color = Color(0.30311, 0.608761, 0.511145, 1)
@@ -194,6 +195,11 @@ body = NodePath("../..")
 hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
 metadata/_custom_type_script = "uid://miugg8jpe2ku"
 
+[node name="KnockbackHandler" type="Node3D" parent="FrogCharacter/Systems/EffectManager" node_paths=PackedStringArray("body")]
+script = ExtResource("18_pn65j")
+body = NodePath("../../..")
+metadata/_custom_type_script = "uid://tp7u7qxjy8l5"
+
 [node name="WaterSplashManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("16_j7bvy")
 hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
@@ -308,6 +314,15 @@ alpha_cut = 2
 texture_filter = 0
 texture = ExtResource("9_ghpyy")
 
+[node name="AttackSprites" type="Node3D" parent="Mosquitoknight/Visual"]
+
+[node name="Stab" type="Node3D" parent="Mosquitoknight/Visual/AttackSprites"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual/AttackSprites/Stab"]
+transform = Transform3D(-2.1855695e-07, -5, -2.1855695e-07, 0, -2.1855695e-07, 5, -5, 2.1855695e-07, 9.553428e-15, 0.63882065, 0, 0)
+texture_filter = 0
+texture = ExtResource("23_75pfo")
+
 [node name="Systems" type="Node3D" parent="Mosquitoknight"]
 
 [node name="StateManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("current_state", "root")]
@@ -324,14 +339,18 @@ acceleration = 10.0
 deceleration = 30.0
 attack_state = NodePath("../MosquitoAttackState")
 
-[node name="MosquitoAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("aggro_manager", "hitbox", "next_state")]
+[node name="MosquitoAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("aggro_manager", "hitbox", "attack_visual", "next_state")]
 script = ExtResource("24_gm488")
 aggro_manager = NodePath("../../Aggromanager")
-hitbox = NodePath("../../HitAndHurt/Hitboxes/Hitbox")
+hitbox = NodePath("../../HitAndHurt/Hitboxes/Hitbox_stab")
+attack_visual = NodePath("../../../Visual/AttackSprites/Stab")
 windup_time = 0.5
 attack_time = 0.2
 next_state = NodePath("../SimpleHuntstate")
 attack_velocity = 2.0
+can_take_attack_knockback = true
+attack_knockback_force = 1.0
+knockback_amount = 1.0
 
 [node name="Aggromanager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("target")]
 script = ExtResource("26_2cnsr")
@@ -384,14 +403,14 @@ shape = SubResource("BoxShape3D_ajshl")
 
 [node name="Hitboxes" type="Node3D" parent="Mosquitoknight/Systems/HitAndHurt"]
 
-[node name="Hitbox" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes"]
+[node name="Hitbox_stab" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes"]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("7_uacia")
 metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes/Hitbox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.595621)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes/Hitbox_stab"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.7773051, 0, 0)
 shape = SubResource("BoxShape3D_gsk6d")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
