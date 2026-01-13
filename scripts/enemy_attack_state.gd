@@ -16,11 +16,17 @@ var attack_direction:Vector3
 @export var attack_knockback_force:float
 @export var knockback_amount:float
 
+func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
+	super._initialize_state(state_machine_node, root_node)
+	hitbox.hit_entity.connect(hit_object)
+
 func _enter_state():
 	is_active = true
 	attack_direction = (aggro_manager.target.global_position - root.global_position).normalized()
 	await get_tree().create_timer(windup_time).timeout
 	registering = true
+	set_hitbox_rotation(attack_direction)
+	set_slash_indicator_rotation(attack_direction)
 	root.add_force(attack_direction*attack_velocity)
 	await get_tree().create_timer(attack_time).timeout
 	state_machine._change_state(next_state)
@@ -51,4 +57,9 @@ func _state_update(_delta: float):
 func _state_physics_update(_delta: float):
 	root.velocity = root.velocity.move_toward(Vector3.ZERO, _delta*attack_deceleration)
 	root.move_and_slide()
-#https://youtu.be/p0WKsKpu5-o?si=jyhabiDI9mHGKV2v&t=427
+	
+func set_slash_indicator_rotation(attack_direction:Vector3) -> void:
+	pass
+	
+func set_hitbox_rotation(attack_direction:Vector3) -> void:
+	pass
