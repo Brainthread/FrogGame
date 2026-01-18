@@ -2,7 +2,7 @@
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
-[ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scenes/path_manager.gd" id="2_2cnsr"]
+[ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scripts/path_manager.gd" id="2_2cnsr"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_jcd4p"]
 [ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_uacia"]
 [ext_resource type="Script" uid="uid://w3oxfr1xotrg" path="res://scripts/tongue_attack_state.gd" id="4_7yos8"]
@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://ditgtgoaurqhl" path="res://sprite/Slash.png" id="7_jcd4p"]
 [ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="7_uacia"]
 [ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="9_ghpyy"]
-[ext_resource type="Script" uid="uid://dmj61wc554x8h" path="res://scenes/player_death_manager.gd" id="10_4k8fq"]
+[ext_resource type="Script" uid="uid://dmj61wc554x8h" path="res://scripts/player_death_manager.gd" id="10_4k8fq"]
 [ext_resource type="Script" uid="uid://c4mpe0vm2olow" path="res://scripts/tongue_attack_handler.gd" id="10_xrtyr"]
 [ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="11_daiq8"]
 [ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="12_7mbro"]
@@ -31,7 +31,7 @@
 [ext_resource type="Script" uid="uid://i1cinfaxm21s" path="res://scripts/statemachines/enemies/EnemyStateMachine.gd" id="23_gsk6d"]
 [ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scripts/enemy_attack_state.gd" id="24_gm488"]
 [ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/effects/water_splash_effect.tscn" id="25_y81of"]
-[ext_resource type="Script" uid="uid://b4ye0343qbd4y" path="res://scenes/aggromanager.gd" id="26_2cnsr"]
+[ext_resource type="Script" uid="uid://b4ye0343qbd4y" path="res://scripts/aggromanager.gd" id="26_2cnsr"]
 [ext_resource type="Material" uid="uid://cq31wu4xny0ql" path="res://materials/water.tres" id="26_kay4s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
