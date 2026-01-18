@@ -5,6 +5,7 @@ class_name PlayerGroundState
 var movement_vector:Vector3
 @export var acceleration:float = 10
 @export var deceleration:float = 10
+@export var idle_velocity_dampening:float = 8
 @export var g:float = -9.82
 var jump_timer = 0;
 @export var jump_state:PlayerJumpState
@@ -50,7 +51,9 @@ func _state_update(_delta: float):
 func calculate_new_velocity(target_velocity:Vector3, current_velocity:Vector3, delta:float) -> Vector3:
 	var new_velocity:Vector3 = current_velocity
 	var dot:float = target_velocity.dot(current_velocity)
-	if dot >= 0:
+	if Vector2(target_velocity.x, target_velocity.y) == Vector2.ZERO:
+		new_velocity = new_velocity.move_toward(target_velocity, delta*idle_velocity_dampening)
+	elif dot >= 0:
 		new_velocity = new_velocity.move_toward(target_velocity, delta*acceleration)
 	else:
 		new_velocity = new_velocity.move_toward(target_velocity, delta*deceleration)

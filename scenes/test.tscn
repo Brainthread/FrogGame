@@ -143,8 +143,9 @@ root = NodePath("../..")
 
 [node name="Grounded" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_attack_state")]
 script = ExtResource("3_uacia")
-acceleration = 30.0
-deceleration = 30.0
+acceleration = 25.0
+deceleration = 25.0
+idle_velocity_dampening = 23.0
 g = -19.64
 jump_state = NodePath("../Jump")
 airborne_state = NodePath("../Airborne")
@@ -153,7 +154,7 @@ ground_attack_state = NodePath("../GroundAttack")
 [node name="GroundAttack" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("slash_hitbox", "slash_fx", "jump_state", "airborne_state", "ground_state", "effect_manager")]
 script = ExtResource("4_yk7ts")
 slice_movement_force = 9.0
-attack_time = 0.2
+attack_time = 0.3
 attack_windup_time = 0.1
 slice_movement_curve = SubResource("Curve_at5dv")
 slash_hitbox = NodePath("../../HitAndHurt/Hitboxes/hitbox_slash")
@@ -176,6 +177,7 @@ body = NodePath("../../..")
 script = ExtResource("5_ajshl")
 airborne_state = NodePath("../Airborne")
 grounded_state = NodePath("../Grounded")
+jump_power = 5
 
 [node name="Airborne" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("grounded_state")]
 script = ExtResource("6_ghpyy")
@@ -347,10 +349,11 @@ attack_visual = NodePath("../../../Visual/AttackSprites/Stab")
 windup_time = 0.5
 attack_time = 0.2
 next_state = NodePath("../SimpleHuntstate")
+attack_deceleration = 30.0
 attack_velocity = 2.0
 can_take_attack_knockback = true
-attack_knockback_force = 1.0
-knockback_amount = 1.0
+attack_knockback_force = 3.0
+knockback_amount = 7.0
 
 [node name="Aggromanager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("target")]
 script = ExtResource("26_2cnsr")
