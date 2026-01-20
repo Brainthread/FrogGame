@@ -107,22 +107,31 @@ func get_attached_body() -> Node3D:
 	return tongue_attached_node
 
 func tongue_attack_raycast():
-	var cam = get_viewport().get_camera_3d()
-	var ray_origin = InputReader.get_mouse_world_origin(cam)
-	var ray_normal = InputReader.get_mouse_world_normal(cam)
-	var space_state = get_world_3d().direct_space_state
-	var ray_end = ray_origin + ray_normal * 100
-	var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
-	query.collide_with_areas = true
-	query.collide_with_bodies = true
-	var result = space_state.intersect_ray(query)
-	if result != null and result.has("position"):
-		var target_point:Vector3 = result.position
-		target_point.y = self.position.y
-		tongue_target_position = target_point
-		tongue_state = TongueState.EXTENDING
-		tongue_hitbox.is_active = true
-		tongue_tip_node.reparent(get_tree().get_root())
-		tongue_hitbox.start_detecting_hits()
-		tongue_tip_node.visible = true
-		tongue_line_node.visible = true
+	var inputvector:Vector2 = InputReader._get_attack_direction(self)
+	var target_point:Vector3 = self.global_position + Vector3(-inputvector.x, 0, -inputvector.y) * 1000
+	target_point.y = self.global_position.y
+	tongue_state = TongueState.EXTENDING
+	tongue_hitbox.is_active = true
+	tongue_tip_node.reparent(get_tree().get_root())
+	tongue_hitbox.start_detecting_hits()
+	tongue_tip_node.visible = true
+	tongue_line_node.visible = true
+	#var cam = get_viewport().get_camera_3d()
+	#var ray_origin = InputReader.get_mouse_world_origin(cam)
+	#var ray_normal = InputReader.get_mouse_world_normal(cam)
+	#var space_state = get_world_3d().direct_space_state
+	#var ray_end = ray_origin + ray_normal * 100
+	#var query = PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
+	#query.collide_with_areas = true
+	#query.collide_with_bodies = true
+	#var result = space_state.intersect_ray(query)
+	#if result != null and result.has("position"):
+		#var target_point:Vector3 = result.position
+		#target_point.y = self.position.y
+		#tongue_target_position = target_point
+		#tongue_state = TongueState.EXTENDING
+		#tongue_hitbox.is_active = true
+		#tongue_tip_node.reparent(get_tree().get_root())
+		#tongue_hitbox.start_detecting_hits()
+		#tongue_tip_node.visible = true
+		#tongue_line_node.visible = true
