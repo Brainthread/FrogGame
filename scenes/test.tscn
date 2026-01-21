@@ -239,6 +239,7 @@ transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
 script = ExtResource("10_xrtyr")
 tongue_hitbox = NodePath("TonguePoint/Hitbox")
 retraction_speed = 16.0
+retraction_acceleration_speed = 1.5
 tongue_tip_node = NodePath("TonguePoint")
 tongue_line_node = NodePath("Sprite3D")
 state_manager = NodePath("../../StateMachine")

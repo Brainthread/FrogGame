@@ -12,6 +12,12 @@ func _get_attack_direction(object):
 	if joystick:
 		return null
 	else:
+		return _get_mouse_object_offset(object).normalized()
+		
+func _get_attack_offset(object):
+	if joystick:
+		return null
+	else:
 		return _get_mouse_object_offset(object)
 
 func _get_object_screen_position(object) -> Vector2:
@@ -35,10 +41,10 @@ func get_mouse_world_normal(cam:Camera3D) -> Vector3:
 func _get_mouse_object_offset(object) -> Vector2:
 	var screen_pos = _get_object_screen_position(object)
 	var mouse_position = get_viewport().get_mouse_position();
+	var tilt_angle = deg_to_rad(40)
 	var diff = screen_pos - mouse_position;
-	return diff.normalized()
-	
-	
+	diff.y /= sin(tilt_angle)
+	return diff
 
 func _pressed_button(_button) -> void:
 	on_press_button.emit()

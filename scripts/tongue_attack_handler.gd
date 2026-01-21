@@ -107,8 +107,8 @@ func get_attached_body() -> Node3D:
 	return tongue_attached_node
 
 func tongue_attack_raycast():
-	var inputvector:Vector2 = InputReader._get_attack_direction(self)
-	var target_point:Vector3 = self.global_position + Vector3(-inputvector.x, 0, -inputvector.y) * 1000
+	var inputvector:Vector2 = InputReader._get_attack_offset(self).normalized()
+	var target_point:Vector3 = self.global_position + Vector3(-inputvector.x, 0, -inputvector.y) * 5
 	target_point.y = self.global_position.y
 	tongue_state = TongueState.EXTENDING
 	tongue_hitbox.is_active = true
@@ -116,6 +116,7 @@ func tongue_attack_raycast():
 	tongue_hitbox.start_detecting_hits()
 	tongue_tip_node.visible = true
 	tongue_line_node.visible = true
+	tongue_target_position = target_point
 	#var cam = get_viewport().get_camera_3d()
 	#var ray_origin = InputReader.get_mouse_world_origin(cam)
 	#var ray_normal = InputReader.get_mouse_world_normal(cam)
