@@ -54,13 +54,22 @@ func _ready() -> void:
 	tongue_hitbox.hit_entity.connect(_tongue_hit_object)
 
 func _process(delta: float) -> void:
-	var dir = tongue_tip_node.global_position - self.global_position
-	var dir2 = Vector2(dir.x, dir.z).normalized()
-	var id = Vector2.RIGHT.normalized()
-	var z_angle = (id).angle_to(dir2)+PI/2
-	tongue_line_node.global_position = (dir)/2 + self.global_position
-	tongue_line_node.rotation = Vector3(90, 0, z_angle)
-	tongue_line_node.scale = Vector3(1.0, dir.length() * 5, 1.0)
+	var target_pos = tongue_tip_node.global_position
+	var start_pos = mouth_marker.global_position
+	var dir = target_pos - start_pos
+	var dist = dir.length()
+
+#TODO: Put this in separate function
+	if dist > 0.01: 
+		tongue_line_node.visible = true 
+		tongue_line_node.global_position = start_pos + (dir / 2.0)
+		tongue_line_node.look_at(target_pos, Vector3.UP)
+		tongue_line_node.rotate_object_local(Vector3.RIGHT, deg_to_rad(90))
+		tongue_line_node.scale.y = dist * 5.0
+	else:
+		tongue_line_node.visible = false 
+		tongue_line_node.scale.y = 0.001
+	
 	if not usable:
 		_start_retracting()
 	match tongue_state:
@@ -75,13 +84,13 @@ func _process(delta: float) -> void:
 			if tongue_tip_node.position.distance_to(tongue_target_position) < 0.01:
 				_start_retracting()
 		TongueState.RETRACTING:
-			if tongue_tip_node.position.distance_to(self.global_position) < 0.1:
+			if tongue_tip_node.position.distance_to(mouth_marker.global_position) < 0.1:
 				tongue_state = TongueState.WAITING
 				tongue_tip_node.reparent(self)
 				retraction_acceleration_counter = 0
 			else:
 				retraction_acceleration_counter += delta
-				tongue_tip_node.position = tongue_tip_node.position.move_toward(self.global_position, delta*(retraction_speed+retraction_acceleration_counter)) 
+				tongue_tip_node.position = tongue_tip_node.position.move_toward(mouth_marker.global_position, delta*(retraction_speed+retraction_acceleration_counter)) 
 		TongueState.ATTACHED:
 			_test_for_retracting()
 			if tongue_attached_node == null:
