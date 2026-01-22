@@ -487,6 +487,7 @@ collision_mask = 0
 shape = SubResource("BoxShape3D_gm488")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8398261, 0)
 mesh = SubResource("PlaneMesh_gm488")
 
 [connection signal="exited_water" from="FrogCharacter/Systems/WaterSplashManager" to="FrogCharacter/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]
