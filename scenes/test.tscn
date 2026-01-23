@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=52 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="1_at5dv"]
@@ -61,6 +61,44 @@ radius = 0.264354
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gsk6d"]
 size = Vector3(0.34866333, 1, 0.67760944)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_75pfo"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.09921973, 0.09921973, 0.09921973, 0.60784316)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gv2t6"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.9999731, 0.72762823, 0.6849262, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1xwo4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5civd"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
 
 [sub_resource type="Environment" id="Environment_g14j6"]
 ambient_light_color = Color(0.30311, 0.608761, 0.511145, 1)
@@ -182,6 +220,13 @@ jump_power = 5
 [node name="Airborne" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("grounded_state")]
 script = ExtResource("6_ghpyy")
 grounded_state = NodePath("../Grounded")
+
+[node name="DamageConsequenceManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
+script = ExtResource("12_7mbro")
+health_manager = NodePath("../HealthManager")
+hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+death_manager = NodePath("../DeathManager")
+metadata/_custom_type_script = "uid://b03jolxit32hw"
 
 [node name="DeathManager" type="Node3D" parent="FrogCharacter/Systems"]
 script = ExtResource("10_4k8fq")
@@ -444,6 +489,23 @@ current = true
 fov = 44.9
 size = 11.849
 far = 30.64
+
+[node name="DamageBar" type="ProgressBar" parent="Camera3D"]
+offset_right = 332.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_75pfo")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gv2t6")
+value = 50.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="Camera3D/DamageBar"]
+layout_mode = 0
+offset_right = 332.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_1xwo4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5civd")
+value = 45.0
+show_percentage = false
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.5562957, 0.8309845, 0, -0.8309846, 0.55629563, 14, 7, 0)

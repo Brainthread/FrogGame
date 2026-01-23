@@ -1,4 +1,5 @@
 extends Node3D
+class_name DamageConsequenceManager
 
 @export var health_manager:HealthManager
 @export var hurtbox:Hurtbox

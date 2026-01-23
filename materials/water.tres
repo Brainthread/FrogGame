@@ -21,5 +21,5 @@ shader_parameter/wave_texture = SubResource("NoiseTexture2D_6tan1")
 shader_parameter/noise_scale = 10.0
 shader_parameter/height_scale = 0.4
 shader_parameter/time_scale = 1.0
-shader_parameter/edge_scale = 0.1
+shader_parameter/edge_scale = 0.29
 shader_parameter/edge_color = Color(1, 1, 1, 1)
