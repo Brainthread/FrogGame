@@ -164,7 +164,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
 collision_layer = 4
 script = ExtResource("14_si7kk")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogCharacter"]
+[node name="PhysicsCollider" type="CollisionShape3D" parent="FrogCharacter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
 shape = SubResource("CapsuleShape3D_ppyta")
 
