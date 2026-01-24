@@ -1,0 +1,174 @@
+[gd_scene load_steps=24 format=3 uid="uid://bcs7ck8bsbe0q"]
+
+[ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="1_8x00c"]
+[ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprite/MosquitoKnight.png" id="2_2c3ns"]
+[ext_resource type="Texture2D" uid="uid://dysd1pacl610e" path="res://sprite/Stab.png" id="3_feaxh"]
+[ext_resource type="Script" uid="uid://i1cinfaxm21s" path="res://scripts/statemachines/enemies/EnemyStateMachine.gd" id="4_n1xq6"]
+[ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scripts/simple_huntstate.gd" id="5_jde4i"]
+[ext_resource type="Script" uid="uid://de0gwidsmclmt" path="res://scripts/enemy_attack_state.gd" id="6_ej604"]
+[ext_resource type="Script" uid="uid://b4ye0343qbd4y" path="res://scripts/aggromanager.gd" id="7_gtwn5"]
+[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="8_qhggb"]
+[ext_resource type="Script" uid="uid://bujy08xidy0g7" path="res://scripts/death_manager.gd" id="9_o6hy7"]
+[ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scripts/health_manager.gd" id="10_340vr"]
+[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="11_04pfb"]
+[ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/instantiable/effects/water_splash_effect.tscn" id="12_wblta"]
+[ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="13_mwyn2"]
+[ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="14_4cpg3"]
+[ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scripts/Draggable.gd" id="15_cvtpr"]
+[ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_gcqci"]
+[ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="17_1o1ck"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf4mk"]
+albedo_color = Color(0, 0.509671, 0.324473, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6uqi0"]
+material = SubResource("StandardMaterial3D_mf4mk")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajshl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gsk6d"]
+size = Vector3(0.34866333, 1, 0.67760944)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
+radius = 0.40527344
+height = 1.3397183
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
+radius = 0.264354
+
+[node name="Enemy_Mosquito" type="Node"]
+
+[node name="Mosquitoknight" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.2555, -0.4288903, -2.4904957)
+collision_layer = 0
+script = ExtResource("1_8x00c")
+mass = 0.4
+
+[node name="Visual" type="Node3D" parent="Mosquitoknight"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Mosquitoknight/Visual"]
+visible = false
+mesh = SubResource("BoxMesh_6uqi0")
+skeleton = NodePath("../..")
+
+[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual"]
+transform = Transform3D(5, 0, 0, 0, 3.8302221, 3.2139378, 0, -3.2139378, 3.8302221, -0.084215164, -0.103452265, 0)
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+texture = ExtResource("2_2c3ns")
+
+[node name="AttackSprites" type="Node3D" parent="Mosquitoknight/Visual"]
+
+[node name="Stab" type="Node3D" parent="Mosquitoknight/Visual/AttackSprites"]
+
+[node name="Sprite3D" type="Sprite3D" parent="Mosquitoknight/Visual/AttackSprites/Stab"]
+transform = Transform3D(-2.1855695e-07, -5, -2.1855695e-07, 0, -2.1855695e-07, 5, -5, 2.1855695e-07, 9.553428e-15, 0.63882065, 0, 0)
+texture_filter = 0
+texture = ExtResource("3_feaxh")
+
+[node name="Systems" type="Node3D" parent="Mosquitoknight"]
+
+[node name="StateManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("current_state", "root")]
+script = ExtResource("4_n1xq6")
+current_state = NodePath("SimpleHuntstate")
+root = NodePath("../..")
+
+[node name="SimpleHuntstate" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("aggro_manager", "nav", "body", "attack_state")]
+script = ExtResource("5_jde4i")
+aggro_manager = NodePath("../../Aggromanager")
+nav = NodePath("../../../NavigationAgent3D")
+body = NodePath("../../..")
+acceleration = 10.0
+deceleration = 30.0
+attack_state = NodePath("../MosquitoAttackState")
+
+[node name="MosquitoAttackState" type="Node3D" parent="Mosquitoknight/Systems/StateManager" node_paths=PackedStringArray("aggro_manager", "hitbox", "attack_visual", "next_state")]
+script = ExtResource("6_ej604")
+aggro_manager = NodePath("../../Aggromanager")
+hitbox = NodePath("../../HitAndHurt/Hitboxes/Hitbox_stab")
+attack_visual = NodePath("../../../Visual/AttackSprites/Stab")
+windup_time = 0.5
+attack_time = 0.2
+next_state = NodePath("../SimpleHuntstate")
+attack_deceleration = 30.0
+attack_velocity = 2.0
+can_take_attack_knockback = true
+attack_knockback_force = 3.0
+knockback_amount = 7.0
+
+[node name="Aggromanager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("7_gtwn5")
+
+[node name="DamageManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
+script = ExtResource("8_qhggb")
+health_manager = NodePath("../HealthManager")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+death_manager = NodePath("../DeathManager")
+
+[node name="DeathManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("9_o6hy7")
+
+[node name="HealthManager" type="Node3D" parent="Mosquitoknight/Systems"]
+script = ExtResource("10_340vr")
+health = 30.0
+max_health = 30.0
+
+[node name="WaterSplashManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("11_04pfb")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+splash_effect_enter = ExtResource("12_wblta")
+
+[node name="EffectManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
+script = ExtResource("13_mwyn2")
+body = NodePath("../..")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+
+[node name="KnockbackManager" type="Node3D" parent="Mosquitoknight/Systems/EffectManager" node_paths=PackedStringArray("body")]
+script = ExtResource("14_4cpg3")
+body = NodePath("../../..")
+
+[node name="DragabilityManager" type="Node3D" parent="Mosquitoknight/Systems" node_paths=PackedStringArray("body", "hurtbox")]
+script = ExtResource("15_cvtpr")
+body = NodePath("../..")
+hurtbox = NodePath("../HitAndHurt/Hurtbox")
+dragforce = 10
+
+[node name="HitAndHurt" type="Node3D" parent="Mosquitoknight/Systems"]
+
+[node name="Hurtbox" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt"]
+collision_mask = 9
+script = ExtResource("16_gcqci")
+is_heavy = true
+metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hurtbox"]
+shape = SubResource("BoxShape3D_ajshl")
+
+[node name="Hitboxes" type="Node3D" parent="Mosquitoknight/Systems/HitAndHurt"]
+
+[node name="Hitbox_stab" type="Area3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("17_1o1ck")
+metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/Systems/HitAndHurt/Hitboxes/Hitbox_stab"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.7773051, 0, 0)
+shape = SubResource("BoxShape3D_gsk6d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
+
+[node name="GroundPolling" type="Area3D" parent="Mosquitoknight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mosquitoknight/GroundPolling"]
+shape = SubResource("SphereShape3D_ppyta")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Mosquitoknight"]
+avoidance_enabled = true
+
+[connection signal="exited_water" from="Mosquitoknight/Systems/WaterSplashManager" to="Mosquitoknight/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]

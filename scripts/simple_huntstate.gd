@@ -20,14 +20,23 @@ func _enter_state() -> void:
 
 func _set_nav_target() -> void:
 	while true:
-		await get_tree().create_timer(randf_range(0.3, 3)).timeout;
-		nav.target_position = aggro_manager.target.global_position
+		if aggro_manager.target != null:
+			await get_tree().create_timer(randf_range(0.3, 3)).timeout;
+			nav.target_position = aggro_manager.target.global_position
+		else:
+			await get_tree().create_timer(randf_range(0.3, 9)).timeout;
+			nav.target_position = Vector3(body.global_position.x + randf_range(-15, 15), 
+											body.global_position.y, 
+											body.global_position.z + randf_range(-15, 15));
 
 func _state_update(delta: float) -> void:
-	var target_distance = aggro_manager.target.global_position.distance_to(self.global_position)
-	if  target_distance < attack_range:
-		state_machine._change_state(attack_state)
-		print("Mosquito knight: ATTACKING")
+	if aggro_manager.target != null:
+		var target_distance = aggro_manager.target.global_position.distance_to(self.global_position)
+		if  target_distance < attack_range:
+			state_machine._change_state(attack_state)
+			print("Mosquito knight: ATTACKING")
+	else:
+		print("Do other thing")
 
 
 func _state_physics_update(delta: float) -> void:

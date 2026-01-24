@@ -23,6 +23,8 @@ func _initialize_state(state_machine_node:FiniteStateMachine, root_node:Node):
 
 func _enter_state():
 	is_active = true
+	if aggro_manager.target == null:
+		state_machine._change_state(next_state)
 	attack_direction = (aggro_manager.target.global_position - root.global_position).normalized()
 	await get_tree().create_timer(windup_time).timeout
 	registering = true

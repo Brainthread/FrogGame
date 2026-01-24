@@ -1,0 +1,241 @@
+[gd_scene load_steps=30 format=3 uid="uid://b427eeltoq12o"]
+
+[ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="1_e5ctq"]
+[ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_gnc5k"]
+[ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_7hh1b"]
+[ext_resource type="Script" uid="uid://b27hyhwdgjwjk" path="res://scripts/statemachines/player/states/PlayerGroundAttackState.gd" id="4_isv8f"]
+[ext_resource type="Script" uid="uid://w3oxfr1xotrg" path="res://scripts/tongue_attack_state.gd" id="5_xmha0"]
+[ext_resource type="Script" uid="uid://bbfpwggwbsg57" path="res://scripts/statemachines/player/states/PlayerJumpState.gd" id="6_qsdt6"]
+[ext_resource type="Script" uid="uid://b2ifomelrlmfr" path="res://scripts/statemachines/player/states/PlayerAirborneState.gd" id="7_v47df"]
+[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="8_qtvl0"]
+[ext_resource type="Script" uid="uid://dmj61wc554x8h" path="res://scripts/player_death_manager.gd" id="9_3qxr5"]
+[ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scripts/health_manager.gd" id="10_c7xul"]
+[ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="11_7r8gw"]
+[ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="12_pcexo"]
+[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="13_2sfd1"]
+[ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/instantiable/effects/water_splash_effect.tscn" id="14_7yppw"]
+[ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="15_wq28r"]
+[ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="16_c65wj"]
+[ext_resource type="Script" uid="uid://c4mpe0vm2olow" path="res://scripts/tongue_attack_handler.gd" id="17_hdudl"]
+[ext_resource type="Texture2D" uid="uid://ys2vv7uhhv5b" path="res://sprite/tongue.png" id="18_knlvm"]
+[ext_resource type="Texture2D" uid="uid://bf5ar4mkltuns" path="res://icon.svg" id="19_c3khl"]
+[ext_resource type="Texture2D" uid="uid://ditgtgoaurqhl" path="res://sprite/Slash.png" id="20_8o3c5"]
+[ext_resource type="Texture2D" uid="uid://chxbdgiwpr16x" path="res://sprite/Pondtus.png" id="21_ijgvy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ppyta"]
+radius = 0.40527344
+height = 1.3397183
+
+[sub_resource type="Curve" id="Curve_at5dv"]
+_data = [Vector2(0, 0.33786076), 0.0, 0.0, 0, 0, Vector2(0.08399999, 0.9558573), 0.0, 0.0, 0, 0, Vector2(0.268, 0.22750425), -0.9737341, -0.9737341, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uacia"]
+size = Vector3(0.9463806, 1, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ajshl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c6rvn"]
+size = Vector3(0.8670654, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mf4mk"]
+albedo_color = Color(0, 0.509671, 0.324473, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6uqi0"]
+material = SubResource("StandardMaterial3D_mf4mk")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
+radius = 0.264354
+
+[node name="Player" type="Node"]
+
+[node name="FrogCharacter" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)
+collision_layer = 4
+script = ExtResource("1_e5ctq")
+
+[node name="PhysicsCollider" type="CollisionShape3D" parent="FrogCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
+shape = SubResource("CapsuleShape3D_ppyta")
+
+[node name="Systems" type="Node3D" parent="FrogCharacter"]
+
+[node name="StateMachine" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("ground_collider", "renderer", "current_state", "root")]
+script = ExtResource("2_gnc5k")
+ground_collider = NodePath("../../GroundPolling")
+g_on_rise = -36.0
+g_on_fall = -58.0
+renderer = NodePath("../../Visual/Sprite3D")
+current_state = NodePath("Grounded")
+root = NodePath("../..")
+
+[node name="Grounded" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_attack_state")]
+script = ExtResource("3_7hh1b")
+acceleration = 25.0
+deceleration = 25.0
+idle_velocity_dampening = 23.0
+g = -19.64
+jump_state = NodePath("../Jump")
+airborne_state = NodePath("../Airborne")
+ground_attack_state = NodePath("../GroundAttack")
+
+[node name="GroundAttack" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("slash_hitbox", "slash_fx", "jump_state", "airborne_state", "ground_state", "effect_manager")]
+script = ExtResource("4_isv8f")
+slice_movement_force = 9.0
+attack_time = 0.3
+attack_windup_time = 0.1
+slice_movement_curve = SubResource("Curve_at5dv")
+slash_hitbox = NodePath("../../HitAndHurt/Hitboxes/hitbox_slash")
+slash_fx = NodePath("../../../Visual/Slash-fx")
+jump_state = NodePath("../Jump")
+airborne_state = NodePath("../Airborne")
+ground_state = NodePath("../Grounded")
+effect_manager = NodePath("../../EffectManager")
+attack_deceleration = 30.0
+
+[node name="TongueAttackHeavy" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("jump_state", "airborne_state", "ground_state", "tongue_attack_manager", "body")]
+script = ExtResource("5_xmha0")
+jump_state = NodePath("../Jump")
+airborne_state = NodePath("../Airborne")
+ground_state = NodePath("../Grounded")
+tongue_attack_manager = NodePath("../../SpecialHandler/TongueAttackHandler")
+body = NodePath("../../..")
+
+[node name="Jump" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("airborne_state", "grounded_state")]
+script = ExtResource("6_qsdt6")
+airborne_state = NodePath("../Airborne")
+grounded_state = NodePath("../Grounded")
+jump_power = 5
+
+[node name="Airborne" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("grounded_state")]
+script = ExtResource("7_v47df")
+grounded_state = NodePath("../Grounded")
+
+[node name="DamageConsequenceManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
+script = ExtResource("8_qtvl0")
+health_manager = NodePath("../HealthManager")
+hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+death_manager = NodePath("../DeathManager")
+metadata/_custom_type_script = "uid://b03jolxit32hw"
+
+[node name="DeathManager" type="Node3D" parent="FrogCharacter/Systems"]
+script = ExtResource("9_3qxr5")
+
+[node name="HealthManager" type="Node3D" parent="FrogCharacter/Systems"]
+script = ExtResource("10_c7xul")
+health = 100.0
+max_health = 100.0
+
+[node name="EffectManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("body", "hurtbox")]
+script = ExtResource("11_7r8gw")
+body = NodePath("../..")
+hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+metadata/_custom_type_script = "uid://miugg8jpe2ku"
+
+[node name="KnockbackHandler" type="Node3D" parent="FrogCharacter/Systems/EffectManager" node_paths=PackedStringArray("body")]
+script = ExtResource("12_pcexo")
+body = NodePath("../../..")
+metadata/_custom_type_script = "uid://tp7u7qxjy8l5"
+
+[node name="WaterSplashManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("13_2sfd1")
+hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
+splash_effect_enter = ExtResource("14_7yppw")
+
+[node name="HitAndHurt" type="Node3D" parent="FrogCharacter/Systems"]
+
+[node name="Hitboxes" type="Node3D" parent="FrogCharacter/Systems/HitAndHurt"]
+
+[node name="hitbox_slash" type="Area3D" parent="FrogCharacter/Systems/HitAndHurt/Hitboxes"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("15_wq28r")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogCharacter/Systems/HitAndHurt/Hitboxes/hitbox_slash"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.46287537, 0, 0)
+shape = SubResource("BoxShape3D_uacia")
+
+[node name="Hurtbox" type="Node3D" parent="FrogCharacter/Systems/HitAndHurt"]
+
+[node name="Hurtbox" type="Area3D" parent="FrogCharacter/Systems/HitAndHurt/Hurtbox"]
+collision_layer = 4
+collision_mask = 12
+script = ExtResource("16_c65wj")
+is_heavy = true
+metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogCharacter/Systems/HitAndHurt/Hurtbox/Hurtbox"]
+shape = SubResource("BoxShape3D_ajshl")
+
+[node name="SpecialHandler" type="Node3D" parent="FrogCharacter/Systems"]
+
+[node name="TongueAttackHandler" type="Node3D" parent="FrogCharacter/Systems/SpecialHandler" node_paths=PackedStringArray("mouth_marker", "tongue_hitbox", "tongue_tip_node", "tongue_line_node", "state_manager", "state_machine_state")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
+script = ExtResource("17_hdudl")
+attach_force = 12.0
+mouth_marker = NodePath("TongueOrigin")
+tongue_hitbox = NodePath("TonguePoint/Hitbox")
+extension_speed = 15.0
+retraction_speed = 20.0
+retraction_acceleration_speed = 1.5
+tongue_tip_node = NodePath("TonguePoint")
+tongue_line_node = NodePath("Sprite3D")
+state_manager = NodePath("../../StateMachine")
+state_machine_state = NodePath("../../StateMachine/TongueAttackHeavy")
+
+[node name="Sprite3D" type="Sprite3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler"]
+transform = Transform3D(4.9999995, 0, 0, 0, 3.8302214, 3.2139373, 0, -3.2139373, 3.8302214, 0, 0, 0)
+texture_filter = 0
+texture = ExtResource("18_knlvm")
+
+[node name="TonguePoint" type="Node3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler"]
+
+[node name="Sprite3D" type="Sprite3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+transform = Transform3D(0.2, 0, 0, 0, 0.15320887, 0.1285575, 0, -0.1285575, 0.15320887, 0, 0, 0)
+texture = ExtResource("19_c3khl")
+
+[node name="Hitbox" type="Area3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler/TonguePoint"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("15_wq28r")
+metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler/TonguePoint/Hitbox"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, -0.066467285, 0, 0)
+shape = SubResource("BoxShape3D_c6rvn")
+
+[node name="TongueOrigin" type="Node3D" parent="FrogCharacter/Systems/SpecialHandler/TongueAttackHandler"]
+transform = Transform3D(1, 0, 0, 0, 0.9999995, 0, 0, 0, 0.9999995, 0, 0.30144215, 0.1681477)
+
+[node name="Visual" type="Node3D" parent="FrogCharacter"]
+
+[node name="Slash-fx" type="Node3D" parent="FrogCharacter/Visual"]
+
+[node name="Node3D" type="Node3D" parent="FrogCharacter/Visual/Slash-fx"]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="FrogCharacter/Visual/Slash-fx/Node3D"]
+transform = Transform3D(-2.1855695e-07, -5.0000005, 2.1855696e-07, 1.9106854e-14, 2.1855696e-07, 5.0000005, -5, 2.1855696e-07, 9.553428e-15, 0.57455003, -0.002635479, 0)
+texture_filter = 0
+texture = ExtResource("20_8o3c5")
+
+[node name="Sprite3D" type="Sprite3D" parent="FrogCharacter/Visual"]
+transform = Transform3D(5, 0, 0, 0, 3.8302221, 3.2139378, 0, -3.2139378, 3.8302221, -0.0842151, -0.08068371, -8.31124e-09)
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+texture = ExtResource("21_ijgvy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FrogCharacter/Visual"]
+visible = false
+mesh = SubResource("BoxMesh_6uqi0")
+skeleton = NodePath("../..")
+
+[node name="GroundPolling" type="Area3D" parent="FrogCharacter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FrogCharacter/GroundPolling"]
+shape = SubResource("SphereShape3D_ppyta")
+
+[connection signal="exited_water" from="FrogCharacter/Systems/WaterSplashManager" to="FrogCharacter/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]
