@@ -1,6 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://b427eeltoq12o"]
+[gd_scene load_steps=31 format=3 uid="uid://b427eeltoq12o"]
 
 [ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="1_e5ctq"]
+[ext_resource type="Script" uid="uid://7bo813l14n7" path="res://scripts/entity_handling/player_entity.gd" id="1_gnc5k"]
 [ext_resource type="Script" uid="uid://nspaq3db88q3" path="res://scripts/statemachines/player/FrogStateMachine.gd" id="2_gnc5k"]
 [ext_resource type="Script" uid="uid://begne7xovp0ms" path="res://scripts/statemachines/player/states/PlayerGroundState.gd" id="3_7hh1b"]
 [ext_resource type="Script" uid="uid://b27hyhwdgjwjk" path="res://scripts/statemachines/player/states/PlayerGroundAttackState.gd" id="4_isv8f"]
@@ -48,6 +49,7 @@ material = SubResource("StandardMaterial3D_mf4mk")
 radius = 0.264354
 
 [node name="Player" type="Node"]
+script = ExtResource("1_gnc5k")
 
 [node name="FrogCharacter" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.12482, 0)

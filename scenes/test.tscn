@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=17 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scripts/path_manager.gd" id="2_2cnsr"]
+[ext_resource type="Script" uid="uid://b32r0eqcdgkju" path="res://scenes/player_manager.gd" id="2_at5dv"]
 [ext_resource type="PackedScene" uid="uid://b427eeltoq12o" path="res://scenes/instantiable/player/player.tscn" id="3_lpvoh"]
 [ext_resource type="PackedScene" uid="uid://bcs7ck8bsbe0q" path="res://scenes/instantiable/enemies/enemy_mosquito.tscn" id="4_at5dv"]
 [ext_resource type="PackedScene" uid="uid://bg1owrrruuh0w" path="res://scenes/lily_pad.tscn" id="7_44saj"]
@@ -83,26 +84,33 @@ subdivide_depth = 90
 
 [node name="GameManager" type="Node3D" parent="."]
 
-[node name="AudioListener3D" type="AudioListener3D" parent="GameManager"]
+[node name="AudioManager" type="Node3D" parent="GameManager"]
+
+[node name="AudioListener3D" type="AudioListener3D" parent="GameManager/AudioManager"]
 current = true
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="GameManager"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer" parent="GameManager/AudioManager"]
 stream = ExtResource("1_1dqgb")
 volume_db = -11.378
 autoplay = true
 mix_target = 2
 parameters/looping = true
 
-[node name="PathManager" type="Node3D" parent="." node_paths=PackedStringArray("dynamic_scene_node", "effect_scene_node")]
+[node name="EnemyManager" type="Node3D" parent="GameManager"]
+
+[node name="PlayerManager" type="Node3D" parent="GameManager"]
+script = ExtResource("2_at5dv")
+
+[node name="PathManager" type="Node3D" parent="GameManager" node_paths=PackedStringArray("dynamic_scene_node", "effect_scene_node")]
 script = ExtResource("2_2cnsr")
 dynamic_scene_node = NodePath("Scene/DynamicScene")
 effect_scene_node = NodePath("Scene/DynamicScene/Effects")
 
-[node name="Scene" type="Node3D" parent="PathManager"]
+[node name="Scene" type="Node3D" parent="GameManager/PathManager"]
 
-[node name="DynamicScene" type="Node3D" parent="PathManager/Scene"]
+[node name="DynamicScene" type="Node3D" parent="GameManager/PathManager/Scene"]
 
-[node name="Effects" type="Node3D" parent="PathManager/Scene/DynamicScene"]
+[node name="Effects" type="Node3D" parent="GameManager/PathManager/Scene/DynamicScene"]
 
 [node name="Player" parent="." instance=ExtResource("3_lpvoh")]
 
@@ -133,8 +141,10 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_5civd")
 value = 45.0
 show_percentage = false
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.5562957, 0.8309845, 0, -0.8309846, 0.55629563, 14, 7, 0)
+[node name="StaticSceneObjects" type="Node3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="StaticSceneObjects"]
+transform = Transform3D(1, 0, 0, 0, 0.55629563, 0.8309845, 0, -0.8309845, 0.55629563, 14, 7, 0)
 light_angular_distance = 16.05
 shadow_enabled = true
 shadow_bias = 2.145
@@ -148,32 +158,32 @@ directional_shadow_blend_splits = true
 directional_shadow_max_distance = 267.5
 directional_shadow_pancake_size = 0.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="StaticSceneObjects"]
 environment = SubResource("Environment_g14j6")
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="StaticSceneObjects"]
 navigation_mesh = SubResource("NavigationMesh_ajshl")
 
-[node name="Lily_pad" type="Node3D" parent="NavigationRegion3D"]
+[node name="Lily_pad" type="Node3D" parent="StaticSceneObjects/NavigationRegion3D"]
 transform = Transform3D(-6.556708e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.556708e-08, -0.0105181, -4.28093, 0.0119583)
 
-[node name="lily_pad2" parent="NavigationRegion3D/Lily_pad" instance=ExtResource("7_44saj")]
+[node name="lily_pad2" parent="StaticSceneObjects/NavigationRegion3D/Lily_pad" instance=ExtResource("7_44saj")]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.78668, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Lily_pad"]
+[node name="StaticBody3D" type="StaticBody3D" parent="StaticSceneObjects/NavigationRegion3D/Lily_pad"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Lily_pad/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticSceneObjects/NavigationRegion3D/Lily_pad/StaticBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 1.96958, 0)
 shape = SubResource("CylinderShape3D_g14j6")
 
-[node name="Water" type="Area3D" parent="."]
+[node name="Water" type="Area3D" parent="StaticSceneObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.1886096, 0)
 collision_layer = 8
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Water"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticSceneObjects/Water"]
 shape = SubResource("BoxShape3D_gm488")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Water"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticSceneObjects/Water"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8398261, 0)
 mesh = SubResource("PlaneMesh_gm488")
