@@ -29,14 +29,14 @@ func _set_nav_target() -> void:
 											body.global_position.y, 
 											body.global_position.z + randf_range(-15, 15));
 
-func _state_update(delta: float) -> void:
+func _state_update(_delta: float) -> void:
 	if aggro_manager.target != null:
 		var target_distance = aggro_manager.target.global_position.distance_to(self.global_position)
 		if  target_distance < attack_range:
 			state_machine._change_state(attack_state)
-			print("Mosquito knight: ATTACKING")
+			pass
 	else:
-		print("Do other thing")
+		pass
 
 
 func _state_physics_update(delta: float) -> void:
