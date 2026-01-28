@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=18 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scripts/path_manager.gd" id="2_2cnsr"]
 [ext_resource type="Script" uid="uid://b32r0eqcdgkju" path="res://scenes/player_manager.gd" id="2_at5dv"]
+[ext_resource type="Script" uid="uid://14an4j5nwxnn" path="res://scenes/enemy_manager.gd" id="2_jcd4p"]
 [ext_resource type="PackedScene" uid="uid://b427eeltoq12o" path="res://scenes/instantiable/player/player.tscn" id="3_lpvoh"]
 [ext_resource type="PackedScene" uid="uid://bcs7ck8bsbe0q" path="res://scenes/instantiable/enemies/enemy_mosquito.tscn" id="4_at5dv"]
 [ext_resource type="PackedScene" uid="uid://bg1owrrruuh0w" path="res://scenes/lily_pad.tscn" id="7_44saj"]
@@ -97,6 +98,8 @@ mix_target = 2
 parameters/looping = true
 
 [node name="EnemyManager" type="Node3D" parent="GameManager"]
+script = ExtResource("2_jcd4p")
+test_enemy = ExtResource("4_at5dv")
 
 [node name="PlayerManager" type="Node3D" parent="GameManager"]
 script = ExtResource("2_at5dv")
@@ -112,9 +115,9 @@ effect_scene_node = NodePath("Scene/DynamicScene/Effects")
 
 [node name="Effects" type="Node3D" parent="GameManager/PathManager/Scene/DynamicScene"]
 
-[node name="Player" parent="." instance=ExtResource("3_lpvoh")]
+[node name="WaveManager" type="Node3D" parent="GameManager"]
 
-[node name="Enemy_Mosquito" parent="." instance=ExtResource("4_at5dv")]
+[node name="Player" parent="." instance=ExtResource("3_lpvoh")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 9.191, 12.335)
