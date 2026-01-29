@@ -3,6 +3,8 @@ class_name GameEntity
 
 @onready var main_object:Node3D = self.get_child(0)
 
+signal health_depleted
+
 func _enter_tree():
 	main_object = self.get_child(0)
 

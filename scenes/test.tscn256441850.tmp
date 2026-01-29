@@ -117,8 +117,6 @@ effect_scene_node = NodePath("Scene/DynamicScene/Effects")
 
 [node name="WaveManager" type="Node3D" parent="GameManager"]
 
-[node name="Enemy_Mosquito" parent="GameManager" instance=ExtResource("4_at5dv")]
-
 [node name="Player" parent="." instance=ExtResource("3_lpvoh")]
 
 [node name="Camera3D" type="Camera3D" parent="."]

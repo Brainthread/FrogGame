@@ -12,3 +12,10 @@ func get_player () -> GameEntity:
 
 func on_player_death ():
 	player = null
+
+func spawn_player(spawn_position:Vector3) -> Node:
+	var player_instance = player_prefab.instantiate()
+	NodePaths.dynamic_scene_path.add_child(player_instance)
+	var player_entity:EnemyEntity = player_instance as EnemyEntity
+	player_entity.get_main_object().global_position = spawn_position
+	return player_entity

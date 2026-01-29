@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b427eeltoq12o"]
+[gd_scene load_steps=30 format=3 uid="uid://b427eeltoq12o"]
 
 [ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="1_e5ctq"]
 [ext_resource type="Script" uid="uid://7bo813l14n7" path="res://scripts/entity_handling/player_entity.gd" id="1_gnc5k"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://w3oxfr1xotrg" path="res://scripts/tongue_attack_state.gd" id="5_xmha0"]
 [ext_resource type="Script" uid="uid://bbfpwggwbsg57" path="res://scripts/statemachines/player/states/PlayerJumpState.gd" id="6_qsdt6"]
 [ext_resource type="Script" uid="uid://b2ifomelrlmfr" path="res://scripts/statemachines/player/states/PlayerAirborneState.gd" id="7_v47df"]
-[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="8_qtvl0"]
 [ext_resource type="Script" uid="uid://dmj61wc554x8h" path="res://scripts/player_death_manager.gd" id="9_3qxr5"]
 [ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scripts/health_manager.gd" id="10_c7xul"]
 [ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="11_7r8gw"]
@@ -112,13 +111,6 @@ jump_power = 5
 [node name="Airborne" type="Node3D" parent="FrogCharacter/Systems/StateMachine" node_paths=PackedStringArray("grounded_state")]
 script = ExtResource("7_v47df")
 grounded_state = NodePath("../Grounded")
-
-[node name="DamageConsequenceManager" type="Node3D" parent="FrogCharacter/Systems" node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
-script = ExtResource("8_qtvl0")
-health_manager = NodePath("../HealthManager")
-hurtbox = NodePath("../HitAndHurt/Hurtbox/Hurtbox")
-death_manager = NodePath("../DeathManager")
-metadata/_custom_type_script = "uid://b03jolxit32hw"
 
 [node name="DeathManager" type="Node3D" parent="FrogCharacter/Systems"]
 script = ExtResource("9_3qxr5")
