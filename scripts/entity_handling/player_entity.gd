@@ -15,10 +15,17 @@ class_name PlayerEntity
 @export_subgroup("")
 
 @export var effect_manager:EffectManager
+@export var water_splash_manager:WaterSplashHandler
 
 @export_group("Subsystems")
 @export var hurtbox:Hurtbox
+@export var hitbox:Hitbox
+
+var display_health:float
 
 func _enter_tree():
 	hurtbox.took_damage.connect(health_manager.apply_damage)
 	health_manager.depleted_health.connect(death_manager.die)
+
+func _process(_delta: float) -> void:
+	display_health = health_manager.health;
