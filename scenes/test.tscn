@@ -1,10 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp56kp11t4ngg"]
+[gd_scene load_steps=20 format=3 uid="uid://cp56kp11t4ngg"]
 
 [ext_resource type="AudioStream" uid="uid://pmc3kysxqlc6" path="res://sound/sfx/pixabay/lake-wavelet-27909.mp3" id="1_1dqgb"]
 [ext_resource type="Script" uid="uid://cpuxx83goq5ye" path="res://scripts/path_manager.gd" id="2_2cnsr"]
 [ext_resource type="Script" uid="uid://b32r0eqcdgkju" path="res://scenes/player_manager.gd" id="2_at5dv"]
 [ext_resource type="Script" uid="uid://14an4j5nwxnn" path="res://scenes/enemy_manager.gd" id="2_jcd4p"]
+[ext_resource type="Script" uid="uid://cdrfstpx35r12" path="res://scenes/ui_manager.gd" id="2_uacia"]
 [ext_resource type="PackedScene" uid="uid://b427eeltoq12o" path="res://scenes/instantiable/player/player.tscn" id="3_lpvoh"]
+[ext_resource type="Script" uid="uid://d4km7624424c" path="res://scenes/health_bar_manager.gd" id="3_yk7ts"]
 [ext_resource type="PackedScene" uid="uid://bcs7ck8bsbe0q" path="res://scenes/instantiable/enemies/enemy_mosquito.tscn" id="4_at5dv"]
 [ext_resource type="PackedScene" uid="uid://bg1owrrruuh0w" path="res://scenes/lily_pad.tscn" id="7_44saj"]
 [ext_resource type="Material" uid="uid://cq31wu4xny0ql" path="res://materials/water.tres" id="26_kay4s"]
@@ -97,6 +99,39 @@ autoplay = true
 mix_target = 2
 parameters/looping = true
 
+[node name="UI_Manager" type="Node3D" parent="GameManager"]
+script = ExtResource("2_uacia")
+
+[node name="Control" type="Control" parent="GameManager/UI_Manager"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health_Bar_Manager" type="Control" parent="GameManager/UI_Manager/Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_yk7ts")
+
+[node name="DamageBar" type="ProgressBar" parent="GameManager/UI_Manager/Control/Health_Bar_Manager"]
+layout_mode = 0
+offset_right = 332.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxFlat_75pfo")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gv2t6")
+value = 50.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="GameManager/UI_Manager/Control/Health_Bar_Manager/DamageBar"]
+layout_mode = 0
+offset_right = 332.0
+offset_bottom = 27.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_1xwo4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_5civd")
+value = 45.0
+show_percentage = false
+
 [node name="EnemyManager" type="Node3D" parent="GameManager"]
 script = ExtResource("2_jcd4p")
 test_enemy = ExtResource("4_at5dv")
@@ -120,31 +155,6 @@ effect_scene_node = NodePath("Scene/DynamicScene/Effects")
 [node name="Enemy_Mosquito" parent="GameManager" instance=ExtResource("4_at5dv")]
 
 [node name="Player" parent="." instance=ExtResource("3_lpvoh")]
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.7660444, 0.6427875, 0, -0.6427875, 0.7660444, 0, 9.191, 12.335)
-projection = 1
-current = true
-fov = 44.9
-size = 11.849
-far = 30.64
-
-[node name="DamageBar" type="ProgressBar" parent="Camera3D"]
-offset_right = 332.0
-offset_bottom = 27.0
-theme_override_styles/background = SubResource("StyleBoxFlat_75pfo")
-theme_override_styles/fill = SubResource("StyleBoxFlat_gv2t6")
-value = 50.0
-show_percentage = false
-
-[node name="HealthBar" type="ProgressBar" parent="Camera3D/DamageBar"]
-layout_mode = 0
-offset_right = 332.0
-offset_bottom = 27.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_1xwo4")
-theme_override_styles/fill = SubResource("StyleBoxFlat_5civd")
-value = 45.0
-show_percentage = false
 
 [node name="StaticSceneObjects" type="Node3D" parent="."]
 
@@ -192,3 +202,11 @@ shape = SubResource("BoxShape3D_gm488")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticSceneObjects/Water"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8398261, 0)
 mesh = SubResource("PlaneMesh_gm488")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.7660445, 0.6427876, 0, -0.6427876, 0.7660445, 0, 9.191, 12.335)
+projection = 1
+current = true
+fov = 44.9
+size = 11.849
+far = 30.64

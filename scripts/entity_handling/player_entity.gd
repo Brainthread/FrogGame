@@ -22,10 +22,18 @@ class_name PlayerEntity
 @export var hitbox:Hitbox
 
 var display_health:float
+var display_max_health:float
+
+signal depleted_health
 
 func _enter_tree():
 	hurtbox.took_damage.connect(health_manager.apply_damage)
 	health_manager.depleted_health.connect(death_manager.die)
+	health_manager.depleted_health.connect(_on_health_depleted)
+
+func _on_health_depleted():
+	depleted_health.emit()
 
 func _process(_delta: float) -> void:
 	display_health = health_manager.health;
+	display_max_health = health_manager.max_health;
