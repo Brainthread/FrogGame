@@ -86,11 +86,8 @@ subdivide_depth = 90
 
 [node name="Node3D" type="Node3D"]
 
-[node name="GameManager" type="Node3D" parent="." node_paths=PackedStringArray("player_manager", "enemy_manager", "ui_manager")]
+[node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("1_ajshl")
-player_manager = NodePath("PlayerManager")
-enemy_manager = NodePath("EnemyManager")
-ui_manager = NodePath("UI_Manager")
 
 [node name="AudioManager" type="Node3D" parent="GameManager"]
 
@@ -104,9 +101,8 @@ autoplay = true
 mix_target = 2
 parameters/looping = true
 
-[node name="UI_Manager" type="Node3D" parent="GameManager" node_paths=PackedStringArray("health_bar_manager")]
+[node name="UI_Manager" type="Node3D" parent="GameManager"]
 script = ExtResource("2_uacia")
-health_bar_manager = NodePath("Control/Health_Bar_Manager")
 
 [node name="Control" type="Control" parent="GameManager/UI_Manager"]
 layout_mode = 3
@@ -114,13 +110,11 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Health_Bar_Manager" type="Control" parent="GameManager/UI_Manager/Control" node_paths=PackedStringArray("damage_bar", "health_bar")]
+[node name="Health_Bar_Manager" type="Control" parent="GameManager/UI_Manager/Control"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_yk7ts")
-damage_bar = NodePath("DamageBar")
-health_bar = NodePath("DamageBar/HealthBar")
 
 [node name="DamageBar" type="ProgressBar" parent="GameManager/UI_Manager/Control/Health_Bar_Manager"]
 layout_mode = 0

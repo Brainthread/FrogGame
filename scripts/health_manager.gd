@@ -11,6 +11,7 @@ signal depleted_health
 signal maxed_health
 
 func _ready() -> void:
+	apply_healing(0)
 	if restore_health_on_ready:
 		restore_health()
 
@@ -32,7 +33,7 @@ func apply_damage(damage:float):
 
 func apply_healing(healing:float):
 	health += healing
-	applied_healing.emit()
+	applied_healing.emit(healing, health)
 	if health >= max_health:
 		health = max_health
 		maxed_health.emit()
