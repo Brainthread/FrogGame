@@ -119,6 +119,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_yk7ts")
+health_interpolation_speed = 90.0
+damage_interpolation_speed = 90.0
 damage_bar = NodePath("DamageBar")
 health_bar = NodePath("DamageBar/HealthBar")
 
