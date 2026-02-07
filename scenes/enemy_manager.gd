@@ -12,7 +12,7 @@ func _ready() -> void:
 		var spawn_vec:Vector3 = Vector3(randf_range(-1,1), 0, randf_range(-1, 1)).normalized()*randf_range(0, 5)
 		var enemy = spawn_enemy(test_enemy, spawn_vec) as EnemyEntity
 		enemies.append(enemy)
-		enemy.requested_player_target.connect(on_requested_player_information)
+		enemy.aggro_manager.requested_player_target.connect(on_requested_player_information)
 
 func on_requested_player_information(aggro_manager:AggroManager):
 	requested_player_information.emit(aggro_manager)
