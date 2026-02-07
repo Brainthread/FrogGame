@@ -2,9 +2,9 @@ extends Node3D
 class_name PlayerManager
 
 @export var player_prefab:PackedScene
-@export var player:GameEntity
+@export var player:PlayerEntity
 
-func get_player () -> GameEntity:
+func get_player () -> PlayerEntity:
 	if player:
 		return player
 	else:
@@ -16,6 +16,12 @@ func on_player_death ():
 func spawn_player(spawn_position:Vector3) -> Node:
 	var player_instance = player_prefab.instantiate()
 	NodePaths.dynamic_scene_path.add_child(player_instance)
-	var player_entity:EnemyEntity = player_instance as EnemyEntity
+	var player_entity:PlayerEntity = player_instance as PlayerEntity
 	player_entity.get_main_object().global_position = spawn_position
 	return player_entity
+
+func get_player_information() -> Node3D:
+	if player:
+		return player.get_main_object()
+	else:
+		return null
