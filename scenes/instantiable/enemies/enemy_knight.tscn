@@ -1,25 +1,28 @@
-[gd_scene format=3 uid="uid://cqwwijdm0p0oc"]
+[gd_scene format=3 uid="uid://blart43qvlnw0"]
 
-[ext_resource type="Script" uid="uid://bt4lgvy6c6sc8" path="res://scripts/entity_handling/enemy_entity.gd" id="1_4br2f"]
-[ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="2_hoyat"]
-[ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprites/MosquitoKnight.png" id="3_e77so"]
-[ext_resource type="Texture2D" uid="uid://dysd1pacl610e" path="res://sprites/Stab.png" id="4_lyynm"]
-[ext_resource type="Script" uid="uid://i1cinfaxm21s" path="res://scripts/statemachines/enemies/EnemyStateMachine.gd" id="5_wds1x"]
-[ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scripts/statemachines/enemies/base_warrior/simple_huntstate.gd" id="6_dh7st"]
-[ext_resource type="Script" uid="uid://rso43cpeg3ak" path="res://scenes/instantiable/enemies/knight_attack_state.gd" id="8_4br2f"]
-[ext_resource type="Script" uid="uid://cjvxfjyo5woxi" path="res://scripts/statemachines/enemy_fall_state.gd" id="8_6qubc"]
-[ext_resource type="Script" uid="uid://b4ye0343qbd4y" path="res://scripts/aggromanager.gd" id="9_4w048"]
-[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="10_vohqo"]
-[ext_resource type="Script" uid="uid://bujy08xidy0g7" path="res://scripts/death_manager.gd" id="11_ns6rc"]
-[ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scripts/health_manager.gd" id="12_sjqs7"]
-[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="13_tej2q"]
-[ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/instantiable/effects/water_splash_effect.tscn" id="14_8cdtm"]
-[ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="15_hfuu3"]
-[ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="16_efdfc"]
-[ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scripts/Draggable.gd" id="17_7it0o"]
-[ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="18_vhc5q"]
-[ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="19_seeta"]
-[ext_resource type="Script" uid="uid://cionpm6je6331" path="res://scripts/ground_polling.gd" id="20_ny0uy"]
+[ext_resource type="Script" uid="uid://bt4lgvy6c6sc8" path="res://scripts/entity_handling/enemy_entity.gd" id="1_8bytg"]
+[ext_resource type="Script" uid="uid://yfk7mr61a5eo" path="res://scripts/character_physics_body.gd" id="2_as3hr"]
+[ext_resource type="Texture2D" uid="uid://cl0vaiy8nesdh" path="res://sprites/MosquitoKnight.png" id="3_n02jy"]
+[ext_resource type="Texture2D" uid="uid://dysd1pacl610e" path="res://sprites/Stab.png" id="4_6augs"]
+[ext_resource type="Script" uid="uid://i1cinfaxm21s" path="res://scripts/statemachines/enemies/EnemyStateMachine.gd" id="5_7o20i"]
+[ext_resource type="Script" uid="uid://bf450ln32ku7q" path="res://scripts/statemachines/enemies/base_warrior/simple_huntstate.gd" id="6_7e7k1"]
+[ext_resource type="Script" uid="uid://rso43cpeg3ak" path="res://scenes/instantiable/enemies/knight_attack_state.gd" id="7_lyynm"]
+[ext_resource type="Script" uid="uid://cjvxfjyo5woxi" path="res://scripts/statemachines/enemy_fall_state.gd" id="8_2fjcu"]
+[ext_resource type="Script" uid="uid://dyyk8d0t137ir" path="res://scenes/instantiable/enemies/enemy_stagger_state.gd" id="9_7yjoj"]
+[ext_resource type="Script" uid="uid://b4ye0343qbd4y" path="res://scripts/aggromanager.gd" id="10_lh8y6"]
+[ext_resource type="Script" uid="uid://bnqcj4yq52iv6" path="res://scenes/instantiable/enemies/knight_vulnerable_state.gd" id="10_lyynm"]
+[ext_resource type="Script" uid="uid://b03jolxit32hw" path="res://scripts/damage_manager.gd" id="11_ayq5m"]
+[ext_resource type="Script" uid="uid://bujy08xidy0g7" path="res://scripts/death_manager.gd" id="12_ekktb"]
+[ext_resource type="Script" uid="uid://1rqaiis71irb" path="res://scripts/health_manager.gd" id="13_iq5e3"]
+[ext_resource type="Script" uid="uid://eu8pfa82x6aq" path="res://scripts/water_splash_manager.gd" id="14_62brw"]
+[ext_resource type="PackedScene" uid="uid://coqouaigb7djy" path="res://scenes/instantiable/effects/water_splash_effect.tscn" id="15_5i0rt"]
+[ext_resource type="Script" uid="uid://miugg8jpe2ku" path="res://scripts/effect_manager.gd" id="16_pqvbn"]
+[ext_resource type="Script" uid="uid://tp7u7qxjy8l5" path="res://scripts/knockback_manager.gd" id="17_reuy1"]
+[ext_resource type="Script" uid="uid://725cjofvyd3i" path="res://scenes/instantiable/enemies/enemy_stagger_handler.gd" id="18_of5mj"]
+[ext_resource type="Script" uid="uid://bgtk8eoxqk1wt" path="res://scripts/Draggable.gd" id="19_00aso"]
+[ext_resource type="Script" uid="uid://bi5fwt04sq1jq" path="res://scripts/Hurtbox_draggable.gd" id="20_lsc64"]
+[ext_resource type="Script" uid="uid://c7g7jvcrqudgm" path="res://scripts/Hitbox.gd" id="21_nweru"]
+[ext_resource type="Script" uid="uid://cionpm6je6331" path="res://scripts/ground_polling.gd" id="22_rn4l8"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ajshl"]
 
@@ -33,47 +36,48 @@ height = 1.3397183
 [sub_resource type="SphereShape3D" id="SphereShape3D_ppyta"]
 radius = 0.11657667
 
-[node name="Enemy_knight" type="Node3D" unique_id=1582903108 node_paths=PackedStringArray("aggro_manager")]
-script = ExtResource("1_4br2f")
-aggro_manager = NodePath("Knight/Systems/Aggromanager")
+[node name="Enemy_Knight" type="Node3D" unique_id=1582903108 node_paths=PackedStringArray("aggro_manager")]
+script = ExtResource("1_8bytg")
+aggro_manager = NodePath("ToadKnight/Systems/Aggromanager")
 
-[node name="Knight" type="CharacterBody3D" parent="." unique_id=92928938]
+[node name="ToadKnight" type="CharacterBody3D" parent="." unique_id=92928938]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
 collision_layer = 256
 collision_mask = 139
-script = ExtResource("2_hoyat")
+script = ExtResource("2_as3hr")
 mass = 0.4
 
-[node name="Visual" type="Node3D" parent="Knight" unique_id=1333594439]
+[node name="Visual" type="Node3D" parent="ToadKnight" unique_id=1333594439]
 
-[node name="Sprite3D" type="Sprite3D" parent="Knight/Visual" unique_id=2115486534]
+[node name="Sprite3D" type="Sprite3D" parent="ToadKnight/Visual" unique_id=2115486534]
 transform = Transform3D(5, 0, 0, 0, 4.890738, 1.0395585, 0, -1.0395585, 4.890738, -0.084215164, 0.14336914, 0)
-modulate = Color(0.4846573, 0, 0.07972907, 1)
 shaded = true
 alpha_cut = 2
 texture_filter = 0
-texture = ExtResource("3_e77so")
+texture = ExtResource("3_n02jy")
 
-[node name="AttackSprites" type="Node3D" parent="Knight/Visual" unique_id=756910467]
+[node name="AttackSprites" type="Node3D" parent="ToadKnight/Visual" unique_id=756910467]
 
-[node name="Stab" type="Node3D" parent="Knight/Visual/AttackSprites" unique_id=1099036133]
+[node name="Stab" type="Node3D" parent="ToadKnight/Visual/AttackSprites" unique_id=1099036133]
 
-[node name="Sprite3D" type="Sprite3D" parent="Knight/Visual/AttackSprites/Stab" unique_id=791378888]
+[node name="Sprite3D" type="Sprite3D" parent="ToadKnight/Visual/AttackSprites/Stab" unique_id=791378888]
 transform = Transform3D(-2.1855695e-07, -5, -2.1855695e-07, 0, -2.1855695e-07, 5, -5, 2.1855695e-07, 9.553428e-15, 0.63882065, 0, 0)
 cast_shadow = 0
 alpha_cut = 2
 texture_filter = 0
-texture = ExtResource("4_lyynm")
+texture = ExtResource("4_6augs")
 
-[node name="Systems" type="Node3D" parent="Knight" unique_id=1792654320]
+[node name="Systems" type="Node3D" parent="ToadKnight" unique_id=1792654320]
 
-[node name="StateManager" type="Node3D" parent="Knight/Systems" unique_id=1180063668 node_paths=PackedStringArray("current_state", "root")]
-script = ExtResource("5_wds1x")
+[node name="StateManager" type="Node3D" parent="ToadKnight/Systems" unique_id=1180063668 node_paths=PackedStringArray("stagger_handler", "stagger_state", "current_state", "root")]
+script = ExtResource("5_7o20i")
+stagger_handler = NodePath("../EffectManager/StaggerHandler")
+stagger_state = NodePath("StaggerState")
 current_state = NodePath("SimpleHuntstate")
 root = NodePath("../..")
 
-[node name="SimpleHuntstate" type="Node3D" parent="Knight/Systems/StateManager" unique_id=352460185 node_paths=PackedStringArray("aggro_manager", "nav", "body", "ground_poller")]
-script = ExtResource("6_dh7st")
+[node name="SimpleHuntstate" type="Node3D" parent="ToadKnight/Systems/StateManager" unique_id=352460185 node_paths=PackedStringArray("aggro_manager", "nav", "body", "ground_poller", "attack_state", "fall_state")]
+script = ExtResource("6_7e7k1")
 aggro_manager = NodePath("../../Aggromanager")
 nav = NodePath("../../../NavigationAgent3D")
 body = NodePath("../../..")
@@ -81,95 +85,104 @@ movement_speed = 4.0
 acceleration = 30.0
 deceleration = 30.0
 ground_poller = NodePath("../../../GroundPolling")
+attack_state = NodePath("../MosquitoAttackState")
+fall_state = NodePath("../FallState")
 
-[node name="FallState" type="Node3D" parent="Knight/Systems/StateManager" unique_id=2065644958]
-script = ExtResource("8_6qubc")
+[node name="MosquitoAttackState" type="Node3D" parent="ToadKnight/Systems/StateManager" unique_id=614694876]
+script = ExtResource("7_lyynm")
 
-[node name="AttackState" type="Node3D" parent="Knight/Systems/StateManager" unique_id=717501925 node_paths=PackedStringArray("aggro_manager", "nav", "hitbox", "attack_visual", "next_state")]
-script = ExtResource("8_4br2f")
-aggro_manager = NodePath("../../Aggromanager")
-nav = NodePath("../../../NavigationAgent3D")
-hitbox = NodePath("../../HitAndHurt/Hitboxes/Hitbox_stab")
-attack_visual = NodePath("../../../Visual/AttackSprites/Stab")
-next_state = NodePath("../SimpleHuntstate")
+[node name="FallState" type="Node3D" parent="ToadKnight/Systems/StateManager" unique_id=2065644958]
+script = ExtResource("8_2fjcu")
 
-[node name="Aggromanager" type="Node3D" parent="Knight/Systems" unique_id=1507595778]
-script = ExtResource("9_4w048")
+[node name="StaggerState" type="Node3D" parent="ToadKnight/Systems/StateManager" unique_id=1859463531 node_paths=PackedStringArray("stagger_manager", "fallback_state")]
+script = ExtResource("9_7yjoj")
+stagger_manager = NodePath("../../EffectManager/StaggerHandler")
+fallback_state = NodePath("../SimpleHuntstate")
 
-[node name="DamageManager" type="Node3D" parent="Knight/Systems" unique_id=824187279 node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
-script = ExtResource("10_vohqo")
+[node name="KnightVulnerableState" type="Node3D" parent="ToadKnight/Systems/StateManager" unique_id=1819102274]
+script = ExtResource("10_lyynm")
+
+[node name="Aggromanager" type="Node3D" parent="ToadKnight/Systems" unique_id=1507595778]
+script = ExtResource("10_lh8y6")
+
+[node name="DamageManager" type="Node3D" parent="ToadKnight/Systems" unique_id=824187279 node_paths=PackedStringArray("health_manager", "hurtbox", "death_manager")]
+script = ExtResource("11_ayq5m")
 health_manager = NodePath("../HealthManager")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
 death_manager = NodePath("../DeathManager")
 
-[node name="DeathManager" type="Node3D" parent="Knight/Systems" unique_id=168580225 node_paths=PackedStringArray("root")]
-script = ExtResource("11_ns6rc")
+[node name="DeathManager" type="Node3D" parent="ToadKnight/Systems" unique_id=168580225 node_paths=PackedStringArray("root")]
+script = ExtResource("12_ekktb")
 root = NodePath("../../..")
 
-[node name="HealthManager" type="Node3D" parent="Knight/Systems" unique_id=2006210337]
-script = ExtResource("12_sjqs7")
+[node name="HealthManager" type="Node3D" parent="ToadKnight/Systems" unique_id=2006210337]
+script = ExtResource("13_iq5e3")
 health = 30.0
 max_health = 30.0
 
-[node name="WaterSplashManager" type="Node3D" parent="Knight/Systems" unique_id=702034483 node_paths=PackedStringArray("hurtbox")]
-script = ExtResource("13_tej2q")
+[node name="WaterSplashManager" type="Node3D" parent="ToadKnight/Systems" unique_id=702034483 node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("14_62brw")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
-splash_effect_enter = ExtResource("14_8cdtm")
+splash_effect_enter = ExtResource("15_5i0rt")
 
-[node name="EffectManager" type="Node3D" parent="Knight/Systems" unique_id=1643398593 node_paths=PackedStringArray("hurtbox")]
-script = ExtResource("15_hfuu3")
+[node name="EffectManager" type="Node3D" parent="ToadKnight/Systems" unique_id=1643398593 node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("16_pqvbn")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
 
-[node name="KnockbackManager" type="Node3D" parent="Knight/Systems/EffectManager" unique_id=1341901522 node_paths=PackedStringArray("body")]
-script = ExtResource("16_efdfc")
+[node name="KnockbackManager" type="Node3D" parent="ToadKnight/Systems/EffectManager" unique_id=1341901522 node_paths=PackedStringArray("body")]
+script = ExtResource("17_reuy1")
 body = NodePath("../../..")
 
-[node name="DragabilityManager" type="Node3D" parent="Knight/Systems" unique_id=421196037 node_paths=PackedStringArray("body", "hurtbox")]
-script = ExtResource("17_7it0o")
+[node name="StaggerHandler" type="Node3D" parent="ToadKnight/Systems/EffectManager" unique_id=1581710785 node_paths=PackedStringArray("body")]
+script = ExtResource("18_of5mj")
+body = NodePath("../../..")
+
+[node name="DragabilityManager" type="Node3D" parent="ToadKnight/Systems" unique_id=421196037 node_paths=PackedStringArray("body", "hurtbox")]
+script = ExtResource("19_00aso")
 body = NodePath("../..")
 hurtbox = NodePath("../HitAndHurt/Hurtbox")
 dragforce = 10
 
-[node name="HitAndHurt" type="Node3D" parent="Knight/Systems" unique_id=394964952]
+[node name="HitAndHurt" type="Node3D" parent="ToadKnight/Systems" unique_id=394964952]
 
-[node name="Hurtbox" type="Area3D" parent="Knight/Systems/HitAndHurt" unique_id=102439680]
+[node name="Hurtbox" type="Area3D" parent="ToadKnight/Systems/HitAndHurt" unique_id=102439680]
 collision_layer = 32
 collision_mask = 4
-script = ExtResource("18_vhc5q")
+script = ExtResource("20_lsc64")
 is_heavy = true
 metadata/_custom_type_script = "uid://bi5fwt04sq1jq"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Knight/Systems/HitAndHurt/Hurtbox" unique_id=1093298275]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToadKnight/Systems/HitAndHurt/Hurtbox" unique_id=1093298275]
 shape = SubResource("BoxShape3D_ajshl")
 
-[node name="Hitboxes" type="Node3D" parent="Knight/Systems/HitAndHurt" unique_id=1926654691]
+[node name="Hitboxes" type="Node3D" parent="ToadKnight/Systems/HitAndHurt" unique_id=1926654691]
 
-[node name="Hitbox_stab" type="Area3D" parent="Knight/Systems/HitAndHurt/Hitboxes" unique_id=187598557]
+[node name="Hitbox_stab" type="Area3D" parent="ToadKnight/Systems/HitAndHurt/Hitboxes" unique_id=187598557]
 collision_layer = 0
 collision_mask = 16
-script = ExtResource("19_seeta")
+script = ExtResource("21_nweru")
 metadata/_custom_type_script = "uid://c7g7jvcrqudgm"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Knight/Systems/HitAndHurt/Hitboxes/Hitbox_stab" unique_id=905561714]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToadKnight/Systems/HitAndHurt/Hitboxes/Hitbox_stab" unique_id=905561714]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.863, 0, 0)
 shape = SubResource("BoxShape3D_gsk6d")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Knight" unique_id=200587289]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToadKnight" unique_id=200587289]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.03362894, 0)
 shape = SubResource("CapsuleShape3D_ppyta")
 
-[node name="GroundPolling" type="Area3D" parent="Knight" unique_id=1501893718]
+[node name="GroundPolling" type="Area3D" parent="ToadKnight" unique_id=1501893718]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.555548, 0)
 collision_layer = 0
 collision_mask = 2
-script = ExtResource("20_ny0uy")
+script = ExtResource("22_rn4l8")
 metadata/_custom_type_script = "uid://cionpm6je6331"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Knight/GroundPolling" unique_id=1015429872]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ToadKnight/GroundPolling" unique_id=1015429872]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03632164, 0)
 shape = SubResource("SphereShape3D_ppyta")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Knight" unique_id=486916392]
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="ToadKnight" unique_id=486916392]
 avoidance_enabled = true
 
-[connection signal="exited_water" from="Knight/Systems/WaterSplashManager" to="Knight/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]
+[connection signal="exited_water" from="ToadKnight/Systems/WaterSplashManager" to="ToadKnight/Systems/DeathManager" method="_on_water_splash_manager_exited_water"]

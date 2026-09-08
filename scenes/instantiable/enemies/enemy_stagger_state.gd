@@ -3,7 +3,7 @@ class_name EnemyStaggerState
 
 @export var stagger_manager:EnemyStaggerHandler
 @export var fallback_state:State
-var weak_stagger_time:float = 0.03
+var weak_stagger_time:float = 0.01
 
 var stagger_time:float = 1
 

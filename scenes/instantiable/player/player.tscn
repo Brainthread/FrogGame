@@ -250,7 +250,7 @@ attack_time = 0.2
 attack_windup_time = 0.1
 attack_winddown_time = 0.4
 cancel_time = 0.692
-slash_hitbox = NodePath("")
+slash_hitbox = NodePath("../../../HitAndHurt/Hitboxes/slash_1")
 slash_fx = NodePath("../../../../Visual/slash_2/Node3D")
 metadata/_custom_type_script = "uid://bc1n5f7xdhbsb"
 
@@ -266,7 +266,7 @@ attack_windup_time = 0.1
 attack_winddown_time = 0.4
 can_cancel = false
 cancel_time = 1.0
-slash_hitbox = NodePath("../../../HitAndHurt/Hitboxes/slash_1")
+slash_hitbox = NodePath("../../../Actions/TongueAttackHandler/TonguePoint/Hitbox")
 slash_fx = NodePath("../../../../Visual/slash_3/Node3D")
 metadata/_custom_type_script = "uid://bc1n5f7xdhbsb"
 
